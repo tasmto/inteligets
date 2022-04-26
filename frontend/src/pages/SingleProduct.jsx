@@ -3,6 +3,7 @@ import { useNavigate, useParams, Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { Row, Col, Image, ListGroup, Card, Button } from 'react-bootstrap';
 import Rating from '../components/Rating';
+import axios from 'axios';
 
 const SingleProduct = () => {
   const [product, setProduct] = useState(null);
@@ -11,23 +12,18 @@ const SingleProduct = () => {
   const params = useParams();
 
   useEffect(() => {
-    const fetchProduct = async () => {
+    const fetchProducts = async () => {
       try {
-        const product = await fetch('/products.json');
-        const productData = await product.json();
-        const selectedProduct = productData.find(
-          (prod) => prod._id == params.productId //! change == to ===
-        );
-        setProduct(selectedProduct);
-        setTimeout(() => {
-          setLoading(false);
-        }, 3000);
+        const { data } = await axios.get(`/api/products/${params.productId}`);
+        setProduct(data);
       } catch (error) {
-        console.error(error);
+        console.log(error);
+      } finally {
+        setLoading(false);
       }
     };
-    fetchProduct();
-  }, []);
+    fetchProducts();
+  }, [params.productId]);
 
   const constraintsRef = useRef(null);
 

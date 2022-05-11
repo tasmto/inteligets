@@ -5,25 +5,31 @@ import { listProducts } from '../actions/productActions';
 import Product from '../components/Product';
 
 const HomeScreen = () => {
-  // const dispatch = useDispatch();
+  const dispatch = useDispatch();
 
-  // useEffect(() => {
-  //   dispatch(listProducts());
-  // }, [dispatch]);
+  const productList = useSelector((state) => state.productList);
+  const { loading, error, products } = productList;
 
-  const products = [];
+  useEffect(() => {
+    dispatch(listProducts());
+  }, [dispatch]);
 
-  if (!products) return <>Loading</>;
   return (
     <>
       <h1>Latest Products:</h1>
-      <Row>
-        {products.map((item) => (
-          <Col key={item._id} sm={12} md={6} lg={4} xl={3}>
-            <Product product={item} />
-          </Col>
-        ))}
-      </Row>
+      {loading ? (
+        <h2>loading</h2>
+      ) : error ? (
+        <h2>{error}</h2>
+      ) : (
+        <Row>
+          {products.map((item) => (
+            <Col key={item._id} sm={12} md={6} lg={4} xl={3}>
+              <Product product={item} />
+            </Col>
+          ))}
+        </Row>
+      )}
     </>
   );
 };

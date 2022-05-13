@@ -10,6 +10,7 @@ const router = express.Router();
  */
 router.get(
   '/',
+  /**@todo errors not propagating through correctly */
   asyncHandler(async (req, res) => {
     const products = await Product.find({});
 

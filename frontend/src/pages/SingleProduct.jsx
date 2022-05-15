@@ -1,7 +1,17 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { useNavigate, useParams, Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { Row, Col, Image, ListGroup, Card, Button } from 'react-bootstrap';
+import {
+  Row,
+  Col,
+  Image,
+  ListGroup,
+  Card,
+  Button,
+  ListGroupItem,
+  Form,
+  FormControl,
+} from 'react-bootstrap';
 import Rating from '../components/Rating';
 import axios from 'axios';
 import { useDispatch, useSelector } from 'react-redux';
@@ -10,8 +20,11 @@ import Loader from '../components/Loader';
 import Message from '../components/Message';
 
 const SingleProduct = () => {
+  const [qty, setQty] = useState(1);
+
   const params = useParams();
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const productDetails = useSelector((state) => state.productDetails);
   const { loading, product, error } = productDetails;
@@ -21,6 +34,10 @@ const SingleProduct = () => {
   }, [params.productId]);
 
   const constraintsRef = useRef(null);
+
+  const addToCartHandler = () => {
+    navigate(`/cart/${params.productId}?qty=${qty}`);
+  };
 
   return (
     <>
@@ -114,6 +131,28 @@ const SingleProduct = () => {
                   )}
                 </Row>
               </ListGroup.Item>
+              {product.countInStock > 0 && (
+                <ListGroup.Item>
+                  <Row>
+                    <Col xs='auto'>Qty</Col>
+                    <Col xs='4'>
+                      <Form.Control
+                        as='select'
+                        value={qty}
+                        onChange={(e) => setQty(e.target.value)}
+                      >
+                        {[...Array(product.countInStock).keys()].map(
+                          (count) => (
+                            <option key={count + 1} value={count + 1}>
+                              {count + 1}
+                            </option>
+                          )
+                        )}
+                      </Form.Control>
+                    </Col>
+                  </Row>
+                </ListGroup.Item>
+              )}
               <ListGroup.Item>
                 {loading ? (
                   <div className='placeholder-wave'>
@@ -127,6 +166,7 @@ const SingleProduct = () => {
                     disabled={product.countInStock === 0}
                     className='btn btn-primary btn-block my-3 rounded-pill'
                     type='button'
+                    onClick={addToCartHandler}
                   >
                     Add to cart
                   </button>

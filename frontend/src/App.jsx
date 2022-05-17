@@ -3,7 +3,7 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Footer from './components/Footer';
 import Header from './components/Header';
 import { Container } from 'react-bootstrap';
-import HomeScreen from './pages/HomeScreen';
+import HomePage from './pages/HomePage';
 import SingleProduct from './pages/SingleProduct';
 import NotFound from './pages/NotFound';
 import Cart from './pages/CartPage';
@@ -16,7 +16,7 @@ function App() {
         <Container>
           <Routes>
             <Route path='*' exact element={<NotFound />} />
-            <Route path='/' exact element={<HomeScreen />} />
+            <Route path='/' exact element={<HomePage />} />
             <Route path='/cart/' element={<Cart />} />
             <Route path='/cart/:productId' element={<Cart />} />
             <Route

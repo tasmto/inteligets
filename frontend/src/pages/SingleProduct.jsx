@@ -33,7 +33,7 @@ const SingleProduct = () => {
     dispatch(listProductDetails(params.productId));
   }, [params.productId]);
 
-  const constraintsRef = useRef(null);
+  const cartImageContainerRef = useRef(null);
 
   const addToCartHandler = () => {
     navigate(`/cart/${params.productId}?qty=${qty}`);
@@ -60,7 +60,7 @@ const SingleProduct = () => {
                 y: 10,
                 scale: 1.25,
               }}
-              ref={constraintsRef}
+              ref={cartImageContainerRef}
               className='product-canvas-image--outer'
             >
               <motion.div
@@ -70,7 +70,7 @@ const SingleProduct = () => {
                   scale: 1.25,
                 }}
                 drag
-                dragConstraints={constraintsRef}
+                dragConstraints={cartImageContainerRef}
               >
                 <Image
                   style={{ pointerEvents: 'none' }}
@@ -136,19 +136,26 @@ const SingleProduct = () => {
                   <Row>
                     <Col xs='auto'>Qty</Col>
                     <Col xs='4'>
-                      <Form.Control
-                        as='select'
-                        value={qty}
-                        onChange={(e) => setQty(e.target.value)}
-                      >
-                        {[...Array(product.countInStock).keys()].map(
-                          (count) => (
-                            <option key={count + 1} value={count + 1}>
-                              {count + 1}
-                            </option>
-                          )
-                        )}
-                      </Form.Control>
+                      {loading ? (
+                        <p className='placeholder-glow mb-0'>
+                          <span className='placeholder placeholder-lg  col-2 bg-primary me-4'></span>
+                          <span className='placeholder  placeholder-lg col-4 bg-primary'></span>
+                        </p>
+                      ) : (
+                        <Form.Control
+                          as='select'
+                          value={qty}
+                          onChange={(e) => setQty(e.target.value)}
+                        >
+                          {[...Array(product.countInStock).keys()].map(
+                            (count) => (
+                              <option key={count + 1} value={count + 1}>
+                                {count + 1}
+                              </option>
+                            )
+                          )}
+                        </Form.Control>
+                      )}
                     </Col>
                   </Row>
                 </ListGroup.Item>
@@ -168,7 +175,9 @@ const SingleProduct = () => {
                     type='button'
                     onClick={addToCartHandler}
                   >
-                    Add to cart
+                    {product.countInStock === 0
+                      ? 'Out of Stock'
+                      : 'Add to cart'}
                   </button>
                 )}
               </ListGroup.Item>

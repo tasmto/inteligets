@@ -40,7 +40,7 @@ const Cart = () => {
   return (
     <Row>
       <Col md={12}>
-        <h1>Shopping Cart:</h1>
+        <h1 className='mt-5 mb-4'>Shopping Cart:</h1>
         {/* @todo have a gif in the cart empty */}
         {cartItems.length === 0 ? (
           <Message>
@@ -54,14 +54,14 @@ const Cart = () => {
             {cartItems.map((item) => (
               <ListGroup.Item key={item.product}>
                 <Row>
-                  <Col md={3}>
+                  <Col sm={3}>
                     <Image src={item.image} alt={item.name} fluid rounded />
                   </Col>
-                  <Col md={3}>
+                  <Col sm={3}>
                     <Link to={`/product/${item.product}`}>{item.name}</Link>
                   </Col>
-                  <Col md={2}>R {item.price}</Col>
-                  <Col md={2}>
+                  <Col sm={2}>R {item.price}</Col>
+                  <Col sm={2}>
                     <Form.Control
                       as='select'
                       value={item.qty}
@@ -79,7 +79,7 @@ const Cart = () => {
                       ))}
                     </Form.Control>
                   </Col>
-                  <Col md={2}>
+                  <Col sm={2}>
                     <Button
                       type='button'
                       variant='light'
@@ -94,8 +94,8 @@ const Cart = () => {
           </ListGroup>
         )}
       </Col>
-      <Col md={2}></Col>
-      <Col md={2}></Col>
+      <Col sm={2}></Col>
+      <Col sm={2}></Col>
     </Row>
   );
 };

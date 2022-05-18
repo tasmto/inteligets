@@ -17,7 +17,7 @@ import {
   Button,
   Card,
 } from 'react-bootstrap';
-import { addToCart } from '../actions/cartActions';
+import { addToCart, removeFromCart } from '../actions/cartActions';
 import { calcLength } from 'framer-motion';
 
 const Cart = () => {
@@ -30,17 +30,19 @@ const Cart = () => {
   const cart = useSelector((state) => state.cart);
   const { cartItems } = cart;
 
+  const checkoutHandler = () => navigate('/login?redirect=shipping');
+
   useEffect(() => {
     if (params.productId) dispatch(addToCart(params.productId, qty));
   }, [params.productId, dispatch]);
 
-  const removeFromCartHandler = (id) => {
-    console.log('remove');
+  const removeFromCartHandler = (productId) => {
+    dispatch(removeFromCart(productId));
   };
   return (
-    <Row>
-      <Col md={12}>
-        <h1 className='mt-5 mb-4'>Shopping Cart:</h1>
+    <Row className='mt-5 mb-4'>
+      <Col md={8}>
+        <h1>Shopping Cart:</h1>
         {/* @todo have a gif in the cart empty */}
         {cartItems.length === 0 ? (
           <Message>
@@ -52,8 +54,8 @@ const Cart = () => {
         ) : (
           <ListGroup variant='flush'>
             {cartItems.map((item) => (
-              <ListGroup.Item key={item.product}>
-                <Row>
+              <ListGroup.Item key={item.product} className='my-2'>
+                <Row className='g-3'>
                   <Col sm={3}>
                     <Image src={item.image} alt={item.name} fluid rounded />
                   </Col>
@@ -66,7 +68,6 @@ const Cart = () => {
                       as='select'
                       value={item.qty}
                       onChange={(e) => {
-                        console.log(e.target.value);
                         dispatch(
                           addToCart(item.product, Number(e.target.value))
                         );
@@ -94,8 +95,35 @@ const Cart = () => {
           </ListGroup>
         )}
       </Col>
-      <Col sm={2}></Col>
-      <Col sm={2}></Col>
+      <Col md={4}>
+        <Card>
+          <ListGroup variant='flush'>
+            <ListGroup.Item>
+              <h2>
+                Subtotal (
+                {cartItems.reduce((total, item) => {
+                  return (total += Number(item.qty));
+                }, 0)}
+                ) items
+              </h2>
+              R{' '}
+              {cartItems.reduce((total, item) => {
+                return (total += Number(item.qty * item.price));
+              }, 0)}
+            </ListGroup.Item>
+            <ListGroup.Item>
+              <Button
+                type='button'
+                className='btn-block'
+                disabled={cartItems.length === 0}
+                onClick={checkoutHandler}
+              >
+                Proceed to Checkout
+              </Button>
+            </ListGroup.Item>
+          </ListGroup>
+        </Card>
+      </Col>
     </Row>
   );
 };

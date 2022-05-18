@@ -7,6 +7,7 @@ import HomePage from './pages/HomePage';
 import SingleProduct from './pages/SingleProduct';
 import NotFound from './pages/NotFound';
 import Cart from './pages/CartPage';
+import LoginPage from './pages/LoginPage';
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
           <Routes>
             <Route path='*' exact element={<NotFound />} />
             <Route path='/' exact element={<HomePage />} />
+            <Route path='/login' exact element={<LoginPage />} />
             <Route path='/cart/' element={<Cart />} />
             <Route path='/cart/:productId' element={<Cart />} />
             <Route

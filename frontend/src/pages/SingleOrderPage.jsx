@@ -26,6 +26,15 @@ const SingleOrderPage = () => {
     dispatch(getOrderDetails(params.orderId));
   }, [params.orderId]);
 
+  /*
+In the OrderScreen useEffect(), check for the order and also make sure that the order ID matches the ID in the URL. If it does not, then dispatch getOrderDetails() to fetch the most recent order
+
+useEffect(() => {
+    if(!order || order._id !== orderId) {
+        dispatch(getOrderDefails(orderId))
+    }
+}, [order, orderId]) */
+
   return (
     <>
       {error ? (
@@ -34,9 +43,9 @@ const SingleOrderPage = () => {
         <Loader />
       ) : (
         <>
-          <h1>Order: {order._id}</h1>
-          <Row>
-            <Col md={8} xs={{ order: 'second' }}>
+          <h1>Order Details</h1>
+          <Row className='gy-2 gx-3'>
+            <Col md={8}>
               <ListGroup variant='flush'>
                 <ListGroup.Item className='mb-3'>
                   <h2>Shipping Address:</h2>
@@ -49,22 +58,23 @@ const SingleOrderPage = () => {
                       {order.user.email}
                     </a>
                   </p>
-                  <ListGroup variant='flush'>
-                    {Object.entries(order.shippingAddress).map(
-                      (field, index) => (
-                        <ListGroup.Item key={index}>
-                          <strong className='text-capitalize fw-bold'>
-                            {field.at(0)}:
-                          </strong>{' '}
-                          <span>{field.at(1)}</span>
-                        </ListGroup.Item>
-                      )
-                    )}
-                  </ListGroup>
+                  <p>
+                    Address: {order.shippingAddress.street},{' '}
+                    {order.shippingAddress.city},{' '}
+                    {order.shippingAddress.country},{' '}
+                    {order.shippingAddress.postalCode}
+                  </p>
+                  {order.isDelivered ? (
+                    <Message variant='success'>
+                      Delivered on: {order?.deliveredAt}
+                    </Message>
+                  ) : (
+                    <Message variant='dark'>Not delivered</Message>
+                  )}
                 </ListGroup.Item>
               </ListGroup>
             </Col>
-            <Col md={4} xs={{ order: 'first' }}>
+            <Col md={4}>
               <Card>
                 <ListGroup variant='flush'>
                   <ListGroup.Item>
@@ -99,10 +109,18 @@ const SingleOrderPage = () => {
                       <Col>R {order.totalPrice}</Col>
                     </Row>
                   </ListGroup.Item>
+                  <ListGroup.Item></ListGroup.Item>
                 </ListGroup>
               </Card>
+
+              {order.isPaid ? (
+                <Message variant='success'>Paid on: {order?.paidAt}</Message>
+              ) : (
+                <Message variant='danger'>Not paid</Message>
+              )}
             </Col>
-            <Col md={12} className='mt-3' xs={{ order: 'last' }}>
+
+            <Col md={12}>
               <h2>Products</h2>
               <ListGroup variant='flush'>
                 <ListGroup.Item>

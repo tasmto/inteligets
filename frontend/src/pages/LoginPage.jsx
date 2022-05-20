@@ -21,7 +21,7 @@ const LoginPage = () => {
   useEffect(() => {
     //  Redirect if already loggedIn
     if (userInfo) {
-      navigate(redirect || '/');
+      navigate(redirect ? `/${redirect}` : '/');
     }
   }, [userInfo, redirect]);
 

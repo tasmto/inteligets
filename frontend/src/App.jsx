@@ -10,6 +10,10 @@ import Cart from './pages/CartPage';
 import LoginPage from './pages/LoginPage';
 import RegisterPage from './pages/RegisterPage';
 import ProfilePage from './pages/ProfilePage';
+import ShippingPage from './pages/ShippingPage';
+import PaymentMethodPage from './pages/PaymentMethodPage';
+import PlaceOrderPage from './pages/PlaceOrderPage';
+import SingleOrderPage from './pages/SingleOrderPage';
 
 function App() {
   return (
@@ -25,6 +29,10 @@ function App() {
             <Route path='/register' exact element={<RegisterPage />} />
             <Route path='/cart/' element={<Cart />} />
             <Route path='/cart/:productId' element={<Cart />} />
+            <Route path='/shipping' element={<ShippingPage />} />
+            <Route path='/payment' element={<PaymentMethodPage />} />
+            <Route path='/order' element={<PlaceOrderPage />} />
+            <Route path='/order/:orderId' exact element={<SingleOrderPage />} />
             <Route
               path='/product/:productId'
               exact

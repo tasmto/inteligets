@@ -4,8 +4,7 @@ import { Form, Button, Row, Col, Placeholder } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 import Message from '../components/Message';
 import Loader from '../components/Loader';
-import { register } from '../actions/userActions';
-import FormContainer from '../components/FormContainer';
+import { getUserDetails, updateUserProfile } from '../actions/userActions';
 
 const ProfilePage = () => {
   const [email, setEmail] = useState('');
@@ -16,12 +15,18 @@ const ProfilePage = () => {
   // * @todo: make this an object to have more validation or use react bootstrap
   const [message, setMessage] = useState(null);
   const [searchParams] = useSearchParams();
-  const redirect = searchParams.get('redirect');
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  const userRegister = useSelector((state) => state.userRegister);
-  const { loading, error, userInfo } = userRegister;
+  const userDetails = useSelector((state) => state.userDetails);
+  const { loading, error, user } = userDetails;
+
+  const userLogin = useSelector((state) => state.userLogin);
+  const { userInfo } = userLogin;
+  const updateLoading = userLogin.loading;
+
+  const userUpdateProfile = useSelector((state) => state.userUpdateProfile);
+  const { success } = userUpdateProfile;
 
   // Clear all errors on Navigate in and out
   useEffect(() => {
@@ -29,11 +34,16 @@ const ProfilePage = () => {
   }, []);
 
   useEffect(() => {
-    //  Redirect if already loggedIn
-    if (userInfo) {
-      navigate(redirect || '/');
+    //  Redirect if user isnt logged In
+    if (!userInfo) return navigate('/login');
+
+    // Get actual logged in user details
+    if (!user.name) dispatch(getUserDetails('profile'));
+    else {
+      setName(user.name);
+      setEmail(user.email);
     }
-  }, [userInfo, redirect]);
+  }, [dispatch, userInfo, user]);
 
   const submitHandler = (e) => {
     e.preventDefault();
@@ -42,16 +52,22 @@ const ProfilePage = () => {
     else if (password.length < 6)
       return setMessage('Your password is too short');
 
-    dispatch(register(email, password, name));
+    // DISPATCH UPDATE PROFILE
+    dispatch(updateUserProfile({ id: user._id, name, email, password }));
   };
 
   return (
-    <FormContainer>
-      <h1>Sign Up</h1>
-      {error && <Message variant='danger'>{error}</Message>}
-      {!loading ? (
-        <>
+    <Row>
+      <Col md={3}>
+        <h2>User Profile</h2>
+        {error ? (
+          <Message variant='danger'>{error}</Message>
+        ) : loading || updateLoading ? (
+          <p>Loading</p>
+        ) : (
           <Form onSubmit={submitHandler} className='gy-3'>
+            {/* ! message doesn't clear */}
+            {success && <Message variant='success'>Update successful</Message>}
             <Form.Group controlId='name' className='mb-4'>
               <Form.Label>Full Name</Form.Label>
               <Form.Control
@@ -93,49 +109,23 @@ const ProfilePage = () => {
                 {message}
               </Message>
             )}
-            <Button type='submit' variant='primary'>
-              Sign Up
+            <Button
+              type='submit'
+              variant='primary'
+              disabled={
+                email === user.email && name === user.name && password === ''
+              }
+            >
+              Update Details
             </Button>
           </Form>
-          <Row className='py-3'>
-            <Col>
-              Already have an account?{' '}
-              <Link to={redirect ? `/login?redirect=${redirect}` : '/login'}>
-                Sign In
-              </Link>
-            </Col>
-          </Row>
-        </>
-      ) : (
-        <>
-          <Row className='gy-3'>
-            <Col xs={12}>
-              <Placeholder xs={8} as='h3' size='lg' />
-              <Placeholder xs={10} as='p' size='lg' className='py-3' />
-            </Col>
-            <Col xs={12}>
-              <Placeholder xs={6} as='h3' size='lg' />
-              <Placeholder xs={10} as='p' size='lg' className='py-3' />
-            </Col>
-            <Col xs={12}>
-              <Placeholder xs={7} as='h3' size='lg' />
-              <Placeholder xs={10} as='p' size='lg' className='py-3' />
-            </Col>
-            <Col xs={12}>
-              <Placeholder.Button bg='primary' xs={6} aria-hidden='true' />
-            </Col>
-          </Row>
-          <Row className='gy-3 mt-2'>
-            <Col xs={5}>
-              <Placeholder xs={12} as='p' size='lg' className='py-3' />
-            </Col>
-            <Col xs={6}>
-              <Placeholder xs={12} as='p' size='lg' className='py-2' />
-            </Col>
-          </Row>
-        </>
-      )}
-    </FormContainer>
+        )}
+      </Col>
+      {/* Orders */}
+      <Col md={9}>
+        <h2>My Orders:</h2>
+      </Col>
+    </Row>
   );
 };
 

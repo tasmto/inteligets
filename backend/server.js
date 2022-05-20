@@ -4,6 +4,7 @@ import connectDB from './config/db.js';
 import colors from 'colors';
 import productRoutes from './routes/productRoutes.js';
 import userRoutes from './routes/userRoutes.js';
+import orderRoutes from './routes/orderRoutes.js';
 import { errorHandler, notFound } from './middleware/errorMiddleware.js';
 
 dotenv.config();
@@ -19,6 +20,7 @@ app.get('/', (req, res) => {
 
 app.use('/api/products', productRoutes); // mount the product routes
 app.use('/api/users', userRoutes); // mount the user routes
+app.use('/api/orders', orderRoutes); // mount the order routes
 
 // Error middle ware: inter splices itself wen there is an error
 app.use(notFound);

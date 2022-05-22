@@ -23,6 +23,7 @@ import FormContainer from '../../components/FormContainer';
 import { USER_UPDATE_RESET } from '../../constants/userConstants';
 import { toast } from 'react-toastify';
 import OrdersTable from '../../features/orders/OrdersTable';
+import { FormatDate } from '../../utilities/FormatNumber';
 
 const UserDetailsPage = () => {
   const params = useParams();
@@ -67,12 +68,10 @@ const UserDetailsPage = () => {
               </ListGroup.Item>
               <ListGroup.Item>User Id: {user._id}</ListGroup.Item>
               <ListGroup.Item>
-                <strong>Member since:</strong>{' '}
-                {new Date(user.createdAt).toDateString()}
+                <strong>Member since:</strong> {FormatDate(user.createdAt)}
               </ListGroup.Item>
               <ListGroup.Item>
-                <strong>Last Updated:</strong>{' '}
-                {new Date(user.updatedAt).toDateString()}
+                <strong>Last Updated:</strong> {FormatDate(user.updatedAt)}
               </ListGroup.Item>
               <ListGroupItem>
                 <strong>Number of orders:</strong>{' '}

@@ -1,29 +1,41 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { LinkContainer } from 'react-router-bootstrap';
-import { Table, Button, ButtonToolbar, ButtonGroup } from 'react-bootstrap';
+import {
+  Table,
+  Button,
+  ButtonToolbar,
+  ButtonGroup,
+  Row,
+  Col,
+} from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 import Message from '../../components/Message';
 import Loader from '../../components/Loader';
-import { AiFillEye, AiFillEdit, AiFillDelete } from 'react-icons/ai';
-import { deleteUser, listUsers } from '../../actions/userActions';
+import {
+  AiFillEye,
+  AiFillEdit,
+  AiFillDelete,
+  AiOutlinePlusCircle,
+} from 'react-icons/ai';
+import { listProducts } from '../../actions/productActions';
 import CustomModal from '../../features/modals/Modal';
+import { FormatCurrency } from '../../utilities/FormatNumber';
 
 const ProductListPage = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [deleteStaged, setDeleteStaged] = useState(null);
-  const userList = useSelector((state) => state.userList);
-  const { users, loading, error } = userList;
+  const productList = useSelector((state) => state.productList);
+  const { products, loading, error } = productList;
 
   const userLogin = useSelector((state) => state.userLogin);
   const { userInfo } = userLogin;
 
-  const userDelete = useSelector((state) => state.userDelete);
-  const { success: successDelete, error: errorDelete } = userDelete;
-
-  const deleteHandler = (userId) => {
-    if (deleteStaged?.id) dispatch(deleteUser(deleteStaged?.id));
+  const deleteHandler = () => {
+    // if (deleteStaged?.id) dispatch();
+    console.log(deleteStaged);
+    setDeleteStaged(null);
   };
 
   useEffect(() => {
@@ -31,72 +43,87 @@ const ProductListPage = () => {
   }, [userInfo]);
 
   useEffect(() => {
-    dispatch(listUsers());
-  }, [dispatch, successDelete, errorDelete]);
+    dispatch(listProducts());
+  }, [dispatch]);
+
+  const createProductHandler = () => {};
 
   return (
     <>
-      <h1>Products</h1>
+      <Row className='align-items-center'>
+        <Col>
+          <h1>Products</h1>
+        </Col>
+        <Col className='text-right' style={{ textAlign: 'right' }}>
+          <Button className='my-3  btn-sm' onClick={createProductHandler}>
+            <AiOutlinePlusCircle className='icon me-2' />{' '}
+            <span>New Product</span>
+          </Button>
+        </Col>
+      </Row>
+
       {loading ? (
         <Loader />
       ) : error ? (
         <Message variant='danger'>{error}</Message>
-      ) : users?.length === 0 ? (
-        <Message variant='info'>Seems like there are no users yet</Message>
+      ) : products?.length === 0 ? (
+        <Message variant='info'>Seems like there are no products yet</Message>
       ) : (
-        <Table striped bordered hover responsive className=' align-middle'>
+        <Table
+          striped
+          bordered
+          hover
+          responsive
+          className='table-sm align-middle'
+        >
           <thead>
             <tr>
               <th>Name</th>
-              <th>Email</th>
-              <th>Role</th>
+              <th>Price</th>
+              <th>Category</th>
+              <th>Brand</th>
               <th colSpan='100%'>Actions</th>
             </tr>
           </thead>
           <tbody>
-            {users.map((user) => (
-              <tr key={user._id}>
-                <td>{user.name}</td>
-                <td>
-                  <a href={`mailto:${user.email}`}>{user.email}</a>
-                </td>
-                <td>{user.isAdmin ? 'Admin' : 'Customer'}</td>
+            {products.map((product) => (
+              <tr key={product._id}>
+                <td>{product.name}</td>
+                <td>{FormatCurrency(product.price)}</td>
+                <td>{product.category}</td>
+                <td>{product.brand}</td>
                 <td>
                   <ButtonToolbar aria-label='Actions'>
                     <ButtonGroup>
-                      <LinkContainer to={`/admin/user/${user._id}`}>
+                      <LinkContainer to={`/admin/product/${product._id}`}>
                         <Button
                           size='sm'
                           variant='info'
-                          title='view user details'
+                          title='view product details'
                         >
                           <AiFillEye className='icon' />
                         </Button>
                       </LinkContainer>
 
-                      <LinkContainer to={`/admin/user/${user._id}/edit`}>
+                      <LinkContainer to={`/admin/product/${product._id}/edit`}>
                         <Button
                           size='sm'
                           variant='primary'
-                          title='Edit user details'
+                          title='Edit product'
                         >
                           <AiFillEdit className='icon' />
                         </Button>
                       </LinkContainer>
 
                       <Button
-                        disabled={
-                          user.isAdmin || user.email.includes('customer')
-                        }
                         size='sm'
                         variant='danger'
-                        title={
-                          user.isAdmin
-                            ? "Unfortunately I can't let you delete an admin"
-                            : 'delete user'
-                        }
+                        title='delete product'
                         onClick={() =>
-                          setDeleteStaged({ id: user._id, name: user.name })
+                          setDeleteStaged({
+                            id: product._id,
+                            name: product.name,
+                          })
                         }
                       >
                         <AiFillDelete className='icon' />
@@ -112,12 +139,12 @@ const ProductListPage = () => {
       {deleteStaged && (
         <CustomModal
           type='confirm'
-          title='Delete profile?'
+          title='Delete product?'
           onConfirm={() => deleteHandler()}
           onCancel={() => setDeleteStaged(null)}
         >
-          Are you sure you want to delete{' '}
-          <strong>{deleteStaged?.name}'s</strong> profile?
+          Are you sure you want to delete the
+          <strong>{deleteStaged?.name}</strong>?
         </CustomModal>
       )}
     </>

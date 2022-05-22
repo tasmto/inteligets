@@ -2,6 +2,7 @@ import React from 'react';
 import { AiFillEye } from 'react-icons/ai';
 import { Form, Button, Row, Col, Placeholder, Table } from 'react-bootstrap';
 import { LinkContainer } from 'react-router-bootstrap';
+import { FormatCurrency, FormatDate } from '../../utilities/FormatNumber';
 
 const OrdersTable = ({ orders }) => {
   return (
@@ -22,8 +23,8 @@ const OrdersTable = ({ orders }) => {
             <tr key={order._id}>
               <td>{order.orderItems.length}</td>
               {/* ! Format these correctly */}
-              <td>{new Date(order.createdAt).toDateString()}</td>
-              <td>{order.totalPrice}</td>
+              <td>{FormatDate(order.createdAt, { weekday: 'long' })}</td>
+              <td>{FormatCurrency(order.totalPrice)}</td>
               {/* Display icon instead */}
               <td>{order.isPaid ? 'Paid' : 'Not Paid'}</td>
               <td>{order.isDelivered ? 'Delivered' : 'Not delivered'}</td>

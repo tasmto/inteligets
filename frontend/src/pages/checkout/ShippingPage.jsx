@@ -3,9 +3,9 @@ import { useNavigate, useSearchParams } from 'react-router-dom';
 import { Form, Button, Placeholder } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 
-import FormContainer from '../components/FormContainer';
-import { saveShippingAddress } from '../actions/cartActions';
-import CheckoutSteps from '../components/CheckoutSteps';
+import FormContainer from '../../components/FormContainer';
+import { saveShippingAddress } from '../../actions/cartActions';
+import CheckoutSteps from '../../components/CheckoutSteps';
 
 const ShippingPage = () => {
   const navigate = useNavigate();

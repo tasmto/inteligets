@@ -12,12 +12,12 @@ import {
   Form,
   FormControl,
 } from 'react-bootstrap';
-import Rating from '../components/Rating';
+import Rating from '../../components/Rating';
 import axios from 'axios';
 import { useDispatch, useSelector } from 'react-redux';
-import { listProductDetails } from '../actions/productActions';
-import Loader from '../components/Loader';
-import Message from '../components/Message';
+import { listProductDetails } from '../../actions/productActions';
+import Loader from '../../components/Loader';
+import Message from '../../components/Message';
 
 const SingleProduct = () => {
   const [qty, setQty] = useState(1);

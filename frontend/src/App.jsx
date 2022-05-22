@@ -1,20 +1,24 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-
+import { ToastContainer, cssTransition } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import Footer from './components/Footer';
 import Header from './components/Header';
 import { Container } from 'react-bootstrap';
 import HomePage from './pages/HomePage';
-import SingleProduct from './pages/SingleProduct';
 import NotFound from './pages/NotFound';
+import SingleProduct from './pages/product/SingleProduct';
 import Cart from './pages/CartPage';
-import LoginPage from './pages/LoginPage';
-import RegisterPage from './pages/RegisterPage';
-import ProfilePage from './pages/ProfilePage';
-import ShippingPage from './pages/ShippingPage';
-import PaymentMethodPage from './pages/PaymentMethodPage';
-import PlaceOrderPage from './pages/PlaceOrderPage';
-import SingleOrderPage from './pages/SingleOrderPage';
-import UserListScreen from './pages/UserListScreen';
+import LoginPage from './pages/account/LoginPage';
+import RegisterPage from './pages/account/RegisterPage';
+import ProfilePage from './pages/account/ProfilePage';
+import ShippingPage from './pages/checkout/ShippingPage';
+import PaymentMethodPage from './pages/checkout/PaymentMethodPage';
+import PlaceOrderPage from './pages/checkout/PlaceOrderPage';
+import SingleOrderPage from './pages/order/SingleOrderPage';
+import UserListPage from './pages/admin/UserListPage';
+import UserDetailsPage from './pages/admin/UserDetailsPage';
+import ProductListPage from './pages/admin/ProductListPage';
+import UserEditPage from './pages/admin/UserEditPage';
 
 function App() {
   return (
@@ -40,10 +44,29 @@ function App() {
               element={<SingleProduct />}
             />
 
-            {/* Admin Screen */}
-            <Route path='/users' element={<UserListScreen />} />
+            {/* Admin Pages */}
+            <Route path='/admin'>
+              <Route path='/admin/products' element={<ProductListPage />} />
+              <Route path='/admin/users' element={<UserListPage />} />
+              <Route path='/admin/user/:userId' element={<UserDetailsPage />} />
+              <Route
+                path='/admin/user/:userId/edit'
+                element={<UserEditPage />}
+              />
+            </Route>
           </Routes>
         </Container>
+
+        <ToastContainer
+          position='bottom-left'
+          hideProgressBar={true}
+          newestOnTop={false}
+          closeOnClick
+          rtl={false}
+          pauseOnFocusLoss
+          draggable
+          pauseOnHover
+        />
       </main>
       <Footer />
     </Router>
@@ -51,18 +74,3 @@ function App() {
 }
 
 export default App;
-
-/*
-   <Route path="/about-us">
-    <Route path="contact">     <AboutContact/> </Route>
-    <Route path="our-logo">    <AboutLogo/>    </Route>
-    <Route path="the-mission"> <AboutMission/> </Route>
-    <Route path="the-team">    <AboutTeam/>    </Route>
-    <Route path="our-work">    <AboutWork/>    </Route>
-  </Route>
-
-  <Route path="/user">
-    <Route path="sign-in"> <UserSignIn/> </Route>
-    <Route path="sign-up"> <UserSignUp/> </Route>
-  </Route>
-*/

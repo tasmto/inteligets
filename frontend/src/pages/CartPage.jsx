@@ -48,7 +48,7 @@ const Cart = () => {
           <Message>
             Your Cart is empty
             {/* !BUTTON DOESNT WORK */}
-            <Button variant='link' onclick={() => navigate('/')}>
+            <Button variant='link' onClick={() => navigate('/')}>
               Go back to the homepage
             </Button>
           </Message>

@@ -1,25 +1,42 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { LinkContainer } from 'react-router-bootstrap';
 import { Table, Button, ButtonToolbar, ButtonGroup } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
-import Message from '../components/Message';
-import Loader from '../components/Loader';
+import Message from '../../components/Message';
+import Loader from '../../components/Loader';
 import { AiFillEye, AiFillEdit, AiFillDelete } from 'react-icons/ai';
-import { listUsers } from '../actions/userActions';
+import { deleteUser, listUsers } from '../../actions/userActions';
+import CustomModal from '../../features/modals/Modal';
 
-const UserListScreen = () => {
+const ProductListPage = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const [deleteStaged, setDeleteStaged] = useState(null);
   const userList = useSelector((state) => state.userList);
   const { users, loading, error } = userList;
 
+  const userLogin = useSelector((state) => state.userLogin);
+  const { userInfo } = userLogin;
+
+  const userDelete = useSelector((state) => state.userDelete);
+  const { success: successDelete, error: errorDelete } = userDelete;
+
+  const deleteHandler = (userId) => {
+    if (deleteStaged?.id) dispatch(deleteUser(deleteStaged?.id));
+  };
+
+  useEffect(() => {
+    if (!userInfo?.isAdmin) navigate('/login');
+  }, [userInfo]);
+
   useEffect(() => {
     dispatch(listUsers());
-  }, [dispatch]);
+  }, [dispatch, successDelete, errorDelete]);
+
   return (
     <>
-      <h1>Users</h1>
-
+      <h1>Products</h1>
       {loading ? (
         <Loader />
       ) : error ? (
@@ -47,7 +64,7 @@ const UserListScreen = () => {
                 <td>
                   <ButtonToolbar aria-label='Actions'>
                     <ButtonGroup>
-                      <LinkContainer to={`/user/${user._id}`}>
+                      <LinkContainer to={`/admin/user/${user._id}`}>
                         <Button
                           size='sm'
                           variant='info'
@@ -57,7 +74,7 @@ const UserListScreen = () => {
                         </Button>
                       </LinkContainer>
 
-                      <LinkContainer to={`/user/${user._id}/edit`}>
+                      <LinkContainer to={`/admin/user/${user._id}/edit`}>
                         <Button
                           size='sm'
                           variant='primary'
@@ -67,11 +84,23 @@ const UserListScreen = () => {
                         </Button>
                       </LinkContainer>
 
-                      <LinkContainer to={`/user/${user._id}/delete`}>
-                        <Button size='sm' variant='danger' title='delete user'>
-                          <AiFillDelete className='icon' />
-                        </Button>
-                      </LinkContainer>
+                      <Button
+                        disabled={
+                          user.isAdmin || user.email.includes('customer')
+                        }
+                        size='sm'
+                        variant='danger'
+                        title={
+                          user.isAdmin
+                            ? "Unfortunately I can't let you delete an admin"
+                            : 'delete user'
+                        }
+                        onClick={() =>
+                          setDeleteStaged({ id: user._id, name: user.name })
+                        }
+                      >
+                        <AiFillDelete className='icon' />
+                      </Button>
                     </ButtonGroup>
                   </ButtonToolbar>
                 </td>
@@ -80,8 +109,19 @@ const UserListScreen = () => {
           </tbody>
         </Table>
       )}
+      {deleteStaged && (
+        <CustomModal
+          type='confirm'
+          title='Delete profile?'
+          onConfirm={() => deleteHandler()}
+          onCancel={() => setDeleteStaged(null)}
+        >
+          Are you sure you want to delete{' '}
+          <strong>{deleteStaged?.name}'s</strong> profile?
+        </CustomModal>
+      )}
     </>
   );
 };
 
-export default UserListScreen;
+export default ProductListPage;

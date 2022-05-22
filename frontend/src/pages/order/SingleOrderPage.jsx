@@ -2,9 +2,9 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate, useParams, Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { getOrderDetails } from '../actions/orderActions';
-import Loader from '../components/Loader';
-import Message from '../components/Message';
+import { getOrderDetails } from '../../actions/orderActions';
+import Loader from '../../components/Loader';
+import Message from '../../components/Message';
 import {
   Button,
   Placeholder,
@@ -14,7 +14,7 @@ import {
   Image,
   Card,
 } from 'react-bootstrap';
-import PayPalButton from '../features/payments/paypal/PayPalButton';
+import PayPalButton from '../../features/payments/paypal/PayPalButton';
 
 const SingleOrderPage = () => {
   const params = useParams();
@@ -32,7 +32,7 @@ const SingleOrderPage = () => {
   }, [params.orderId, dispatch, successPay]);
 
   /*
-In the OrderScreen useEffect(), check for the order and also make sure that the order ID matches the ID in the URL. If it does not, then dispatch getOrderDetails() to fetch the most recent order
+In the OrderPage useEffect(), check for the order and also make sure that the order ID matches the ID in the URL. If it does not, then dispatch getOrderDetails() to fetch the most recent order
 
 useEffect(() => {
     if(!order || order._id !== orderId) {

@@ -3,11 +3,12 @@ import { Link, useNavigate, useSearchParams } from 'react-router-dom';
 import { Form, Button, Row, Col, Placeholder, Table } from 'react-bootstrap';
 import { LinkContainer } from 'react-router-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
-import Message from '../components/Message';
-import Loader from '../components/Loader';
-import { getUserDetails, updateUserProfile } from '../actions/userActions';
-import { listMyOrders } from '../actions/orderActions';
-import { AiFillEye } from 'react-icons/ai';
+import Message from '../../components/Message';
+import Loader from '../../components/Loader';
+import { getUserDetails, updateUserProfile } from '../../actions/userActions';
+import { USER_UPDATE_RESET } from '../../constants/userConstants';
+import { listMyOrders } from '../../actions/orderActions';
+import OrdersTable from '../../features/orders/OrdersTable';
 const ProfilePage = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -33,9 +34,10 @@ const ProfilePage = () => {
   const myOrders = useSelector((state) => state.orderMyList);
   const { orders, loading: loadingOrders, error: errorOrders } = myOrders;
 
-  // Clear all errors on Navigate in and out
+  // Clear all errors and user on Navigate in and out
   useEffect(() => {
     setMessage(null);
+    dispatch({ type: USER_UPDATE_RESET });
   }, []);
 
   useEffect(() => {
@@ -45,8 +47,8 @@ const ProfilePage = () => {
     // Get actual logged in user details
     if (!user.name) dispatch(getUserDetails('profile'));
     else {
-      setName(user.name);
-      setEmail(user.email);
+      setName(userInfo.name);
+      setEmail(userInfo.email);
     }
   }, [dispatch, userInfo, user]);
 
@@ -138,45 +140,7 @@ const ProfilePage = () => {
         ) : errorOrders ? (
           <Message variant='danger'>{errorOrders}</Message>
         ) : (
-          <Table
-            striped
-            bordered
-            hover
-            responsive
-            className='table-sm align-middle'
-          >
-            <thead>
-              <tr>
-                <th>Items</th>
-                <th>Date</th>
-                <th>Total</th>
-                <th>Paid</th>
-                <th>Delivered</th>
-                <th></th>
-              </tr>
-            </thead>
-            <tbody>
-              {orders &&
-                orders.map((order) => (
-                  <tr key={order._id}>
-                    <td>{order.orderItems.length}</td>
-                    {/* ! Format these correctly */}
-                    <td>{new Date(order.createdAt).toDateString()}</td>
-                    <td>{order.totalPrice}</td>
-                    {/* Display icon instead */}
-                    <td>{order.isPaid ? 'Paid' : 'Not Paid'}</td>
-                    <td>{order.isDelivered ? 'Delivered' : 'Not delivered'}</td>
-                    <td>
-                      <LinkContainer to={`/order/${order._id}`}>
-                        <Button variant='light' size='sm' title='View order'>
-                          <AiFillEye className='icon' /> Details
-                        </Button>
-                      </LinkContainer>
-                    </td>
-                  </tr>
-                ))}
-            </tbody>
-          </Table>
+          <OrdersTable orders={orders} />
         )}
       </Col>
     </Row>

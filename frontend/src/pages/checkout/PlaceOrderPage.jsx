@@ -10,10 +10,10 @@ import {
   Card,
 } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
-import Message from '../components/Message';
-import CheckoutSteps from '../components/CheckoutSteps';
-import { createOrder } from '../actions/orderActions';
-import { shippingPrice, taxPercentage } from '../constants/magicNumbers';
+import Message from '../../components/Message';
+import CheckoutSteps from '../../components/CheckoutSteps';
+import { createOrder } from '../../actions/orderActions';
+import { shippingPrice, taxPercentage } from '../../constants/magicNumbers';
 
 const PlaceOrderPage = () => {
   const dispatch = useDispatch();

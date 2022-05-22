@@ -9,6 +9,7 @@ import {
   Row,
   Col,
 } from 'react-bootstrap';
+import { toast } from 'react-toastify';
 import { useDispatch, useSelector } from 'react-redux';
 import Message from '../../components/Message';
 import Loader from '../../components/Loader';
@@ -18,7 +19,7 @@ import {
   AiFillDelete,
   AiOutlinePlusCircle,
 } from 'react-icons/ai';
-import { listProducts } from '../../actions/productActions';
+import { deleteProduct, listProducts } from '../../actions/productActions';
 import CustomModal from '../../features/modals/Modal';
 import { FormatCurrency } from '../../utilities/FormatNumber';
 
@@ -32,9 +33,16 @@ const ProductListPage = () => {
   const userLogin = useSelector((state) => state.userLogin);
   const { userInfo } = userLogin;
 
+  const productDelete = useSelector((state) => state.productDelete);
+  const {
+    loading: loadingDelete,
+    error: errorDelete,
+    success: successDelete,
+  } = productDelete;
+
   const deleteHandler = () => {
-    // if (deleteStaged?.id) dispatch();
-    console.log(deleteStaged);
+    if (deleteStaged?.id) dispatch(deleteProduct(deleteStaged.id));
+    toast(`Product (${deleteStaged.name}) successfully deleted.`);
     setDeleteStaged(null);
   };
 
@@ -44,7 +52,7 @@ const ProductListPage = () => {
 
   useEffect(() => {
     dispatch(listProducts());
-  }, [dispatch]);
+  }, [dispatch, successDelete]);
 
   const createProductHandler = () => {};
 
@@ -95,7 +103,7 @@ const ProductListPage = () => {
                 <td>
                   <ButtonToolbar aria-label='Actions'>
                     <ButtonGroup>
-                      <LinkContainer to={`/admin/product/${product._id}`}>
+                      <LinkContainer to={`/product/${product._id}`}>
                         <Button
                           size='sm'
                           variant='info'

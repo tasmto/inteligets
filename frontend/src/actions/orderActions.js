@@ -77,6 +77,8 @@ export const payOrder =
     try {
       dispatch({ type: ORDER_PAY_REQUEST });
 
+      console.log(paymentResult);
+
       const {
         userLogin: { userInfo },
       } = getState();

@@ -22,6 +22,10 @@ app.use('/api/products', productRoutes); // mount the product routes
 app.use('/api/users', userRoutes); // mount the user routes
 app.use('/api/orders', orderRoutes); // mount the order routes
 
+app.get('/api/config/paypal', (req, res) =>
+  res.send(process.env.PAYPAL_CLIENT_ID)
+); // Config and send paypal ID
+
 // Error middle ware: inter splices itself wen there is an error
 app.use(notFound);
 app.use(errorHandler);

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, useParams, Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
+
 import { getOrderDetails } from '../actions/orderActions';
 import Loader from '../components/Loader';
 import Message from '../components/Message';
@@ -13,6 +14,7 @@ import {
   Image,
   Card,
 } from 'react-bootstrap';
+import PayPalButton from '../features/payments/paypal/PayPalButton';
 
 const SingleOrderPage = () => {
   const params = useParams();
@@ -22,9 +24,12 @@ const SingleOrderPage = () => {
   const orderDetails = useSelector((state) => state.orderDetails);
   const { loading, order, error } = orderDetails;
 
+  const orderPay = useSelector((state) => state.orderPay);
+  const { loading: loadingPay, success: successPay } = orderPay;
+
   useEffect(() => {
-    dispatch(getOrderDetails(params.orderId));
-  }, [params.orderId]);
+    if (!order || successPay) dispatch(getOrderDetails(params.orderId));
+  }, [params.orderId, dispatch, successPay]);
 
   /*
 In the OrderScreen useEffect(), check for the order and also make sure that the order ID matches the ID in the URL. If it does not, then dispatch getOrderDetails() to fetch the most recent order
@@ -109,7 +114,11 @@ useEffect(() => {
                       <Col>R {order.totalPrice}</Col>
                     </Row>
                   </ListGroup.Item>
-                  <ListGroup.Item></ListGroup.Item>
+                  {!order.isPaid && (
+                    <ListGroup.Item>
+                      {loadingPay ? <Loader /> : <PayPalButton order={order} />}
+                    </ListGroup.Item>
+                  )}
                 </ListGroup>
               </Card>
 

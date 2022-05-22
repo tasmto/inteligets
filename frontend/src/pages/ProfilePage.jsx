@@ -58,7 +58,7 @@ const ProfilePage = () => {
 
   return (
     <Row>
-      <Col md={3}>
+      <Col md={4}>
         <h2>User Profile</h2>
         {error ? (
           <Message variant='danger'>{error}</Message>
@@ -122,7 +122,7 @@ const ProfilePage = () => {
         )}
       </Col>
       {/* Orders */}
-      <Col md={9}>
+      <Col md={8}>
         <h2>My Orders:</h2>
       </Col>
     </Row>

@@ -8,15 +8,18 @@ import {
   FormControl,
   Button,
 } from 'react-bootstrap';
+import { useNavigate } from 'react-router-dom';
 import { LinkContainer } from 'react-router-bootstrap';
 import { logout } from '../actions/userActions';
 
 const Header = () => {
   const userLogin = useSelector((state) => state.userLogin);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const { userInfo } = userLogin;
   const logoutHandler = () => {
     dispatch(logout());
+    navigate('/');
   };
 
   return (

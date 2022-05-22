@@ -31,3 +31,8 @@ img {
     cursor: -webkit-grab;
     cursor: grab;
 }
+
+.icon {
+    height: 24px;
+    width: 24px;
+}

@@ -14,6 +14,7 @@ import ShippingPage from './pages/ShippingPage';
 import PaymentMethodPage from './pages/PaymentMethodPage';
 import PlaceOrderPage from './pages/PlaceOrderPage';
 import SingleOrderPage from './pages/SingleOrderPage';
+import UserListScreen from './pages/UserListScreen';
 
 function App() {
   return (
@@ -38,6 +39,9 @@ function App() {
               exact
               element={<SingleProduct />}
             />
+
+            {/* Admin Screen */}
+            <Route path='/users' element={<UserListScreen />} />
           </Routes>
         </Container>
       </main>

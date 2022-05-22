@@ -47,8 +47,9 @@ const Cart = () => {
         {cartItems.length === 0 ? (
           <Message>
             Your Cart is empty
-            <Button variant='link' onclick={() => navigate(-1)}>
-              Go back
+            {/* !BUTTON DOESNT WORK */}
+            <Button variant='link' onclick={() => navigate('/')}>
+              Go back to the homepage
             </Button>
           </Message>
         ) : (

@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate, useParams, Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { getOrderDetails } from '../../actions/orderActions';
+import { deliverOrder, getOrderDetails } from '../../actions/orderActions';
 import Loader from '../../components/Loader';
 import Message from '../../components/Message';
 import {
@@ -15,6 +15,10 @@ import {
   Card,
 } from 'react-bootstrap';
 import PayPalButton from '../../features/payments/paypal/PayPalButton';
+import {
+  ORDER_DELIVER_RESET,
+  ORDER_PAY_RESET,
+} from '../../constants/orderConstants';
 
 const SingleOrderPage = () => {
   const params = useParams();
@@ -24,27 +28,40 @@ const SingleOrderPage = () => {
   const orderDetails = useSelector((state) => state.orderDetails);
   const { loading, order, error } = orderDetails;
 
+  const userLogin = useSelector((state) => state.userLogin);
+  const { userInfo } = userLogin;
+
+  const orderDeliver = useSelector((state) => state.orderDeliver);
+  const {
+    loading: loadingDeliver,
+    success: successDeliver,
+    error: errorDeliver,
+  } = orderDeliver;
+
   const orderPay = useSelector((state) => state.orderPay);
   const { loading: loadingPay, success: successPay } = orderPay;
 
   useEffect(() => {
-    if (!order || successPay) dispatch(getOrderDetails(params.orderId));
-  }, [params.orderId, dispatch, successPay]);
+    dispatch(getOrderDetails(params.orderId));
+    console.log(successDeliver);
+  }, [params.orderId, dispatch, successPay, successDeliver]);
 
-  /*
-In the OrderPage useEffect(), check for the order and also make sure that the order ID matches the ID in the URL. If it does not, then dispatch getOrderDetails() to fetch the most recent order
+  // * Reset the order deliver and pay every time the page loads
+  useEffect(() => {
+    dispatch({ type: ORDER_DELIVER_RESET });
+    dispatch({ type: ORDER_PAY_RESET });
+  }, []);
 
-useEffect(() => {
-    if(!order || order._id !== orderId) {
-        dispatch(getOrderDefails(orderId))
-    }
-}, [order, orderId]) */
+  const markOrderAsDeliveredHandler = () => {
+    dispatch({ type: ORDER_DELIVER_RESET });
+    dispatch(deliverOrder(params.orderId));
+  };
 
   return (
     <>
       {error ? (
         <Message variant='danger'>{error}</Message>
-      ) : loading ? (
+      ) : loading || loadingDeliver ? (
         <Loader />
       ) : (
         <>
@@ -74,7 +91,19 @@ useEffect(() => {
                       Delivered on: {order?.deliveredAt}
                     </Message>
                   ) : (
-                    <Message variant='dark'>Not delivered</Message>
+                    <>
+                      <Message variant='dark'>
+                        <span>Not delivered</span>
+                      </Message>
+                      {userInfo.isAdmin && (
+                        <Button
+                          className='btn-block'
+                          onClick={markOrderAsDeliveredHandler}
+                        >
+                          Mark as delivered
+                        </Button>
+                      )}
+                    </>
                   )}
                 </ListGroup.Item>
               </ListGroup>

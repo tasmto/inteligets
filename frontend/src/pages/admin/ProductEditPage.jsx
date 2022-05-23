@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 import {
   Link,
   useNavigate,
@@ -12,7 +13,11 @@ import Loader from '../../components/Loader';
 import { listProductDetails } from '../../actions/productActions';
 import FormContainer from '../../components/FormContainer';
 import { toast } from 'react-toastify';
-import { PRODUCT_CREATE_RESET } from '../../constants/productConstants';
+import {
+  PRODUCT_CREATE_RESET,
+  PRODUCT_UPDATE_RESET,
+} from '../../constants/productConstants';
+import { updateProduct } from '../../actions/productActions';
 
 const ProductEditPage = () => {
   const [productData, setProductData] = useState({
@@ -24,6 +29,7 @@ const ProductEditPage = () => {
     category: '',
     description: '',
   });
+  const [uploading, setUploading] = useState(false);
 
   const params = useParams();
   const productId = params.productId;
@@ -37,13 +43,14 @@ const ProductEditPage = () => {
   const userLogin = useSelector((state) => state.userLogin);
   const { userInfo } = userLogin;
 
-  //   const productUpdate = useSelector((state) => state.productUpdate);
-  //   const {
-  //     loading: loadingUpdate,
-  //     error: errorUpdate,
-  //     success: successUpdate,
-  //   } = productUpdate;
+  const productUpdate = useSelector((state) => state.productUpdate);
+  const {
+    loading: loadingUpdate,
+    error: errorUpdate,
+    success: successUpdate,
+  } = productUpdate;
 
+  //* In case some sneaks are trying to see this page when they shouldn't and reset the product create store so that there are no conflicts
   useEffect(() => {
     dispatch({ type: PRODUCT_CREATE_RESET });
     if (!userInfo.isAdmin) {
@@ -52,6 +59,7 @@ const ProductEditPage = () => {
     }
   }, [userInfo]);
 
+  //*   Setting the form fields if the product details are recieved else fetching the product details first
   useEffect(() => {
     if (product?._id !== productId) dispatch(listProductDetails(productId));
     else
@@ -66,6 +74,16 @@ const ProductEditPage = () => {
       });
   }, [dispatch, product, productId]);
 
+  //*   When the product is updated
+  useEffect(() => {
+    if (successUpdate) {
+      dispatch({ type: PRODUCT_UPDATE_RESET });
+      toast.success('Product successfully edited');
+      navigate(`/admin/product/${productId}`);
+    }
+  }, [successUpdate]);
+
+  //*   When a field is edited
   const handleMutate = (e) => {
     setProductData((currentData) => {
       return {
@@ -75,9 +93,34 @@ const ProductEditPage = () => {
     });
   };
 
+  const uploadFileHandler = async (e) => {
+    const file = e.target.files[0];
+    const formData = new FormData();
+    formData.append('image', file);
+    setUploading(true);
+    try {
+      const config = {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      };
+      const { data } = await axios.post('/api/upload', formData, config);
+      setProductData((currentData) => {
+        return {
+          ...currentData,
+          image: data,
+        };
+      });
+      setUploading(false);
+    } catch (error) {
+      toast.error(error);
+      setUploading(false);
+    }
+  };
+
   const submitHandler = (e) => {
     e.preventDefault();
-    // dispatch(updateUser({ _id: productId, email, name, isAdmin }));
+    dispatch(updateProduct({ ...productData, _id: productId }));
   };
 
   return (
@@ -89,10 +132,11 @@ const ProductEditPage = () => {
       <FormContainer>
         <h1>Edit product</h1>
         {error && <Message variant='danger'>{error}</Message>}
-        {loading ? (
+        {loading || loadingUpdate ? (
           <Loader />
         ) : (
           <>
+            {errorUpdate && <Message>{errorUpdate}</Message>}
             <Form onSubmit={submitHandler} className='gy-3'>
               <Form.Group controlId='name' className='mb-4'>
                 <Form.Label>Product Name</Form.Label>
@@ -146,7 +190,8 @@ const ProductEditPage = () => {
               <Form.Group controlId='description' className='mb-4'>
                 <Form.Label>Description</Form.Label>
                 <Form.Control
-                  type='text'
+                  as='textarea'
+                  rows={3}
                   placeholder='Explain what the product is'
                   value={productData.description}
                   onChange={handleMutate}
@@ -159,17 +204,31 @@ const ProductEditPage = () => {
                   placeholder='url of the image'
                   value={productData.image}
                   onChange={handleMutate}
+                  disabled={true}
                 ></Form.Control>
+                <Form.Control
+                  //   id='image-file'
+                  type='file'
+                  label='Choose a file'
+                  onChange={uploadFileHandler}
+                ></Form.Control>
+                {uploading && <Loader />}
               </Form.Group>
 
               <Button type='submit' variant='primary'>
-                Update
+                Update Product
               </Button>
               <Link
                 to={`/admin/product/${productId}`}
-                className='btn btn-light my-3'
+                className='btn btn-secondary my-3'
               >
-                View Live Product
+                Product Stats
+              </Link>
+              <Link
+                to={`/product/${productId}`}
+                className='btn btn-secondary my-3'
+              >
+                Live Product
               </Link>
             </Form>
           </>

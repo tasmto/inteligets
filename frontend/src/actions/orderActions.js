@@ -17,6 +17,12 @@ import {
   ORDER_USER_LIST_REQUEST,
   ORDER_USER_LIST_SUCCESS,
   ORDER_USER_LIST_FAIL,
+  ORDER_LIST_REQUEST,
+  ORDER_LIST_SUCCESS,
+  ORDER_LIST_FAIL,
+  ORDER_DELIVER_REQUEST,
+  ORDER_DELIVER_SUCCESS,
+  ORDER_DELIVER_FAIL,
 } from '../constants/orderConstants';
 
 export const createOrder = (order) => async (dispatch, getState) => {
@@ -82,8 +88,6 @@ export const payOrder =
   (orderId, paymentResult) => async (dispatch, getState) => {
     try {
       dispatch({ type: ORDER_PAY_REQUEST });
-
-      console.log(paymentResult);
 
       const {
         userLogin: { userInfo },
@@ -159,6 +163,61 @@ export const listUserOrders = (id) => async (dispatch, getState) => {
   } catch (error) {
     dispatch({
       type: ORDER_USER_LIST_FAIL,
+      payload:
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message,
+    });
+  }
+};
+
+export const listOrders = () => async (dispatch, getState) => {
+  try {
+    dispatch({ type: ORDER_LIST_REQUEST });
+
+    const {
+      userLogin: { userInfo },
+    } = getState();
+    const config = {
+      headers: {
+        Authorization: `Bearer ${userInfo.token}`,
+      },
+    };
+
+    const { data } = await axios.get(`/api/orders`, config);
+
+    dispatch({ type: ORDER_LIST_SUCCESS, payload: data });
+  } catch (error) {
+    dispatch({
+      type: ORDER_LIST_FAIL,
+      payload:
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message,
+    });
+  }
+};
+
+export const deliverOrder = (orderId) => async (dispatch, getState) => {
+  try {
+    dispatch({ type: ORDER_DELIVER_REQUEST });
+
+    const {
+      userLogin: { userInfo },
+    } = getState();
+    const config = {
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${userInfo.token}`,
+      },
+    };
+
+    await axios.put(`/api/orders/${orderId}/deliver`, {}, config);
+
+    dispatch({ type: ORDER_DELIVER_SUCCESS });
+  } catch (error) {
+    dispatch({
+      type: ORDER_DELIVER_FAIL,
       payload:
         error.response && error.response.data.message
           ? error.response.data.message

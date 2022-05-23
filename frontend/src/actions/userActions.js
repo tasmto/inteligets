@@ -29,6 +29,7 @@ import {
   USER_UPDATE_RESET,
 } from '../constants/userConstants';
 import {
+  ORDER_LIST_RESET,
   ORDER_MY_LIST_RESET,
   ORDER_USER_LIST_REQUEST,
 } from '../constants/orderConstants';
@@ -81,6 +82,9 @@ export const logout = () => (dispatch) => {
   });
   dispatch({
     type: USER_LOGOUT,
+  });
+  dispatch({
+    type: ORDER_LIST_RESET,
   });
   dispatch({
     type: USER_UPDATE_RESET,

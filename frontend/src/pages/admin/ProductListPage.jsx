@@ -18,6 +18,7 @@ import {
   AiFillEdit,
   AiFillDelete,
   AiOutlinePlusCircle,
+  AiOutlineAreaChart,
 } from 'react-icons/ai';
 import {
   createProduct,
@@ -131,10 +132,19 @@ const ProductListPage = () => {
                       <LinkContainer to={`/product/${product._id}`}>
                         <Button
                           size='sm'
+                          variant='light'
+                          title='view live product'
+                        >
+                          <AiFillEye className='icon' />
+                        </Button>
+                      </LinkContainer>
+                      <LinkContainer to={`/admin/product/${product._id}}`}>
+                        <Button
+                          size='sm'
                           variant='info'
                           title='view product details'
                         >
-                          <AiFillEye className='icon' />
+                          <AiOutlineAreaChart className='icon' />
                         </Button>
                       </LinkContainer>
 

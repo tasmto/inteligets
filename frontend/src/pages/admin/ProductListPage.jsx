@@ -19,9 +19,14 @@ import {
   AiFillDelete,
   AiOutlinePlusCircle,
 } from 'react-icons/ai';
-import { deleteProduct, listProducts } from '../../actions/productActions';
+import {
+  createProduct,
+  deleteProduct,
+  listProducts,
+} from '../../actions/productActions';
 import CustomModal from '../../features/modals/Modal';
 import { FormatCurrency } from '../../utilities/FormatNumber';
+import { PRODUCT_CREATE_RESET } from '../../constants/productConstants';
 
 const ProductListPage = () => {
   const dispatch = useDispatch();
@@ -40,6 +45,14 @@ const ProductListPage = () => {
     success: successDelete,
   } = productDelete;
 
+  const productCreate = useSelector((state) => state.productCreate);
+  const {
+    loading: loadingCreate,
+    error: errorCreate,
+    success: successCreate,
+    product: createdProduct,
+  } = productCreate;
+
   const deleteHandler = () => {
     if (deleteStaged?.id) dispatch(deleteProduct(deleteStaged.id));
     toast(`Product (${deleteStaged.name}) successfully deleted.`);
@@ -52,9 +65,15 @@ const ProductListPage = () => {
 
   useEffect(() => {
     dispatch(listProducts());
-  }, [dispatch, successDelete]);
+  }, [dispatch, successDelete, successCreate, dispatch, createdProduct]);
 
-  const createProductHandler = () => {};
+  useEffect(() => {
+    if (successCreate) navigate(`/admin/product/${createdProduct._id}/edit`);
+  }, [successCreate]);
+  const createProductHandler = () => {
+    dispatch({ type: PRODUCT_CREATE_RESET });
+    dispatch(createProduct());
+  };
 
   return (
     <>
@@ -69,6 +88,12 @@ const ProductListPage = () => {
           </Button>
         </Col>
       </Row>
+      {loadingDelete && <Loader />}
+      {errorDelete && toast.error(`Couldn't delete the ${deleteStaged.name}`)}
+
+      {loadingCreate && <Loader />}
+      {errorCreate &&
+        toast.error(`Couldn't create a new product, try logging in again.`)}
 
       {loading ? (
         <Loader />

@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { Col, Pagination, Row, Spinner } from 'react-bootstrap';
 import { listProducts } from '../actions/productActions';
@@ -27,8 +27,14 @@ const HomePage = () => {
   return (
     <>
       <Meta />
-      {!searchTerm && <ProductCarousel />}
-      <h1 className='mt-5 mb-3'>
+      {searchTerm ? (
+        <Link className='btn btn-light' to='/'>
+          Go Back
+        </Link>
+      ) : (
+        <ProductCarousel />
+      )}
+      <h1 className='mt-2 mb-3'>
         {searchTerm ? (
           <span>
             Searching for: <i className='text-secondary'>"{searchTerm}"</i>

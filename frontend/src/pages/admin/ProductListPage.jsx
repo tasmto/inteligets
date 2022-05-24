@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { LinkContainer } from 'react-router-bootstrap';
 import {
   Table,
@@ -28,13 +28,16 @@ import {
 import CustomModal from '../../features/modals/Modal';
 import { FormatCurrency } from '../../utilities/FormatNumber';
 import { PRODUCT_CREATE_RESET } from '../../constants/productConstants';
+import PaginationComponent from '../../features/pagination/PaginationComponent';
 
 const ProductListPage = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const params = useParams();
+  const pageNumber = params.pageNumber || 1;
   const [deleteStaged, setDeleteStaged] = useState(null);
   const productList = useSelector((state) => state.productList);
-  const { products, loading, error } = productList;
+  const { products, loading, error, page, pages } = productList;
 
   const userLogin = useSelector((state) => state.userLogin);
   const { userInfo } = userLogin;
@@ -60,13 +63,15 @@ const ProductListPage = () => {
     setDeleteStaged(null);
   };
 
+  // * Guard for sneaks trying to see a page when they dont have admin access
   useEffect(() => {
     if (!userInfo?.isAdmin) navigate('/login');
   }, [userInfo]);
 
+  // * Fetch products when any is deleted,when new page is triggered, created, when new page is selected or on load
   useEffect(() => {
-    dispatch(listProducts());
-  }, [dispatch, successDelete, successCreate, dispatch, createdProduct]);
+    dispatch(listProducts('', pageNumber));
+  }, [dispatch, successDelete, successCreate, createdProduct, pageNumber]);
 
   useEffect(() => {
     if (successCreate) navigate(`/admin/product/${createdProduct._id}/edit`);
@@ -103,81 +108,87 @@ const ProductListPage = () => {
       ) : products?.length === 0 ? (
         <Message variant='info'>Seems like there are no products yet</Message>
       ) : (
-        <Table
-          striped
-          bordered
-          hover
-          responsive
-          className='table-sm align-middle'
-        >
-          <thead>
-            <tr>
-              <th>Name</th>
-              <th>Price</th>
-              <th>Category</th>
-              <th>Brand</th>
-              <th colSpan='100%'>Actions</th>
-            </tr>
-          </thead>
-          <tbody>
-            {products.map((product) => (
-              <tr key={product._id}>
-                <td>{product.name}</td>
-                <td>{FormatCurrency(product.price)}</td>
-                <td>{product.category}</td>
-                <td>{product.brand}</td>
-                <td>
-                  <ButtonToolbar aria-label='Actions'>
-                    <ButtonGroup>
-                      <LinkContainer to={`/product/${product._id}`}>
-                        <Button
-                          size='sm'
-                          variant='light'
-                          title='view live product'
-                        >
-                          <AiFillEye className='icon' />
-                        </Button>
-                      </LinkContainer>
-                      <LinkContainer to={`/admin/product/${product._id}}`}>
-                        <Button
-                          size='sm'
-                          variant='info'
-                          title='view product details'
-                        >
-                          <AiOutlineAreaChart className='icon' />
-                        </Button>
-                      </LinkContainer>
-
-                      <LinkContainer to={`/admin/product/${product._id}/edit`}>
-                        <Button
-                          size='sm'
-                          variant='primary'
-                          title='Edit product'
-                        >
-                          <AiFillEdit className='icon' />
-                        </Button>
-                      </LinkContainer>
-
-                      <Button
-                        size='sm'
-                        variant='danger'
-                        title='delete product'
-                        onClick={() =>
-                          setDeleteStaged({
-                            id: product._id,
-                            name: product.name,
-                          })
-                        }
-                      >
-                        <AiFillDelete className='icon' />
-                      </Button>
-                    </ButtonGroup>
-                  </ButtonToolbar>
-                </td>
+        <>
+          <Table
+            striped
+            bordered
+            hover
+            responsive
+            className='table-sm align-middle'
+          >
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Price</th>
+                <th>Category</th>
+                <th>Brand</th>
+                <th colSpan='100%'>Actions</th>
               </tr>
-            ))}
-          </tbody>
-        </Table>
+            </thead>
+            <tbody>
+              {products.map((product) => (
+                <tr key={product._id}>
+                  <td>{product.name}</td>
+                  <td>{FormatCurrency(product.price)}</td>
+                  <td>{product.category}</td>
+                  <td>{product.brand}</td>
+                  <td>
+                    <ButtonToolbar aria-label='Actions'>
+                      <ButtonGroup>
+                        <LinkContainer to={`/product/${product._id}`}>
+                          <Button
+                            size='sm'
+                            variant='light'
+                            title='view live product'
+                          >
+                            <AiFillEye className='icon' />
+                          </Button>
+                        </LinkContainer>
+                        {/* @todo products stats page */}
+                        {/* <LinkContainer to={`/admin/product/${product._id}}`}>
+                          <Button
+                            size='sm'
+                            variant='info'
+                            title='view product details'
+                          >
+                            <AiOutlineAreaChart className='icon' />
+                          </Button>
+                        </LinkContainer> */}
+
+                        <LinkContainer
+                          to={`/admin/product/${product._id}/edit`}
+                        >
+                          <Button
+                            size='sm'
+                            variant='primary'
+                            title='Edit product'
+                          >
+                            <AiFillEdit className='icon' />
+                          </Button>
+                        </LinkContainer>
+
+                        <Button
+                          size='sm'
+                          variant='danger'
+                          title='delete product'
+                          onClick={() =>
+                            setDeleteStaged({
+                              id: product._id,
+                              name: product.name,
+                            })
+                          }
+                        >
+                          <AiFillDelete className='icon' />
+                        </Button>
+                      </ButtonGroup>
+                    </ButtonToolbar>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </Table>
+          <PaginationComponent page={page} pages={pages} isAdmin={true} />
+        </>
       )}
       {deleteStaged && (
         <CustomModal

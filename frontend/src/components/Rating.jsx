@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-const Rating = ({ text, rating, color }) => {
+const Rating = ({ text, rating = 5, color }) => {
   const starMarkUp = [];
   for (let i = 0; i < 5; i++) {
     starMarkUp.push(
@@ -29,7 +29,7 @@ Rating.defaultProps = {
   color: '#ffcd3c',
 };
 Rating.propTypes = {
-  text: PropTypes.string.isRequired,
+  text: PropTypes.string,
   rating: PropTypes.number,
   color: PropTypes.string,
 };

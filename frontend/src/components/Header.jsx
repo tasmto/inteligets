@@ -8,9 +8,10 @@ import {
   FormControl,
   Button,
 } from 'react-bootstrap';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Route, Routes } from 'react-router-dom';
 import { LinkContainer } from 'react-router-bootstrap';
 import { logout } from '../actions/userActions';
+import SearchBox from '../features/productSearch/SearchBox';
 
 const Header = () => {
   const userLogin = useSelector((state) => state.userLogin);
@@ -37,6 +38,8 @@ const Header = () => {
           </LinkContainer>
           <Navbar.Toggle aria-controls='navbarScroll' />
           <Navbar.Collapse id='navbarScroll'>
+            <SearchBox />
+
             <Nav
               className=' ms-auto my-2 my-lg-0'
               style={{ maxHeight: '100px' }}

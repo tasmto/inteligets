@@ -31,6 +31,14 @@ function App() {
           <Routes>
             <Route path='*' exact element={<NotFound />} />
             <Route path='/' exact element={<HomePage />} />
+            <Route path='/page/:pageNumber' exact element={<HomePage />} />
+            <Route path='/search/:keyword' exact element={<HomePage />} />
+            <Route
+              path='/search/:keyword/page/:pageNumber'
+              exact
+              element={<HomePage />}
+            />
+
             <Route path='/login' exact element={<LoginPage />} />
             <Route path='/profile' exact element={<ProfilePage />} />
             <Route path='/register' exact element={<RegisterPage />} />
@@ -50,6 +58,11 @@ function App() {
             <Route path='/admin'>
               <Route path='/admin/orders' element={<OrderListPage />} />
               <Route path='/admin/products' element={<ProductListPage />} />
+              <Route
+                path='/admin/products/page/:pageNumber'
+                exact
+                element={<ProductListPage />}
+              />
               <Route
                 path='/admin/product/:productId/edit'
                 element={<ProductEditPage />}

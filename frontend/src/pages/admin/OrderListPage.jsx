@@ -38,7 +38,13 @@ const OrderListPage = () => {
       ) : orders?.length === 0 ? (
         <Message variant='info'>Seems like there are no orders yet</Message>
       ) : (
-        <Table striped bordered hover responsive className=' align-middle'>
+        <Table
+          striped
+          bordered
+          hover
+          responsive
+          className=' align-middle table-sm'
+        >
           <thead>
             <tr>
               <th>User</th>

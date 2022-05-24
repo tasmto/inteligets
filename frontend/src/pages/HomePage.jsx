@@ -1,24 +1,38 @@
 import React, { useEffect } from 'react';
+import { useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { Col, Row, Spinner } from 'react-bootstrap';
+import { Col, Pagination, Row, Spinner } from 'react-bootstrap';
 import { listProducts } from '../actions/productActions';
 import Product from '../components/Product';
 import Message from '../components/Message';
 import Loader from '../components/Loader';
+import PaginationComponent from '../features/pagination/PaginationComponent';
 
 const HomePage = () => {
   const dispatch = useDispatch();
+  const params = useParams();
+  const searchTerm = params.keyword;
+  const pageNumber = params.pageNumber || 1;
 
   const productList = useSelector((state) => state.productList);
-  const { loading, error, products } = productList;
+  const { loading, error, products, page, pages } = productList;
 
+  // * Find products
   useEffect(() => {
-    dispatch(listProducts());
-  }, [dispatch]);
+    dispatch(listProducts(searchTerm, pageNumber));
+  }, [dispatch, searchTerm, pageNumber]);
 
   return (
     <>
-      <h1 className='mt-5 mb-3'>Latest Products:</h1>
+      <h1 className='mt-5 mb-3'>
+        {searchTerm ? (
+          <span>
+            Searching for: <i className='text-secondary'>"{searchTerm}"</i>
+          </span>
+        ) : (
+          'Latest Products:'
+        )}
+      </h1>
       {loading ? (
         <h2>
           <Loader />
@@ -26,13 +40,16 @@ const HomePage = () => {
       ) : error ? (
         <Message variant='danger'>{error}</Message>
       ) : (
-        <Row>
-          {products.map((item) => (
-            <Col key={item._id} sm={12} md={6} lg={4} xl={3}>
-              {loading ? <Spinner /> : <Product product={item} />}
-            </Col>
-          ))}
-        </Row>
+        <>
+          <Row>
+            {products.map((item) => (
+              <Col key={item._id} sm={12} md={6} lg={4} xl={3}>
+                {loading ? <Spinner /> : <Product product={item} />}
+              </Col>
+            ))}
+          </Row>
+          <PaginationComponent pages={pages} page={page} keyword={searchTerm} />
+        </>
       )}
     </>
   );

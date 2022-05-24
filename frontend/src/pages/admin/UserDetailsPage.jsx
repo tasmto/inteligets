@@ -24,6 +24,7 @@ import { USER_UPDATE_RESET } from '../../constants/userConstants';
 import { toast } from 'react-toastify';
 import OrdersTable from '../../features/orders/OrdersTable';
 import { FormatDate } from '../../utilities/FormatNumber';
+import Meta from '../../components/Meta';
 
 const UserDetailsPage = () => {
   const params = useParams();
@@ -49,6 +50,7 @@ const UserDetailsPage = () => {
 
   return (
     <>
+      <Meta title='Proshop | Admin' />
       <Link to='/admin/users' className='btn btn-light my-3'>
         Go Back
       </Link>

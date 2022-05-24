@@ -23,6 +23,7 @@ import { PRODUCT_CREATE_REVIEW_RESET } from '../../constants/productConstants';
 import Loader from '../../components/Loader';
 import Message from '../../components/Message';
 import { FormatDate, FormatCurrency } from '../../utilities/FormatNumber';
+import Meta from '../../components/Meta';
 
 const SingleProduct = () => {
   const [qty, setQty] = useState(1);
@@ -69,6 +70,7 @@ const SingleProduct = () => {
 
   return (
     <>
+      {!loading && <Meta title={`Proshop | ${product.name}`} />}
       <Link to='/' className='btn btn-light my-3'>
         Go Back
       </Link>

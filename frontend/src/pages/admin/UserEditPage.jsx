@@ -13,6 +13,7 @@ import { getUserDetails, updateUser } from '../../actions/userActions';
 import FormContainer from '../../components/FormContainer';
 import { USER_UPDATE_RESET } from '../../constants/userConstants';
 import { toast } from 'react-toastify';
+import Meta from '../../components/Meta';
 
 const UserEditPage = () => {
   const [email, setEmail] = useState('');
@@ -59,19 +60,23 @@ const UserEditPage = () => {
 
   if (!loading && user._id === userInfo._id)
     return (
-      <FormContainer>
-        <h1>Ummmmm...</h1>
-        <p>You can't edit your own profile using this page...</p>
-        <Link to='/admin/users' className='btn btn-primary my-3'>
-          Back user List
-        </Link>{' '}
-        <Link to='/profile' className='btn btn-light my-3'>
-          Go to my profile page instead
-        </Link>
-      </FormContainer>
+      <>
+        <Meta title='Proshop | Wait a minute...' />
+        <FormContainer>
+          <h1>Ummmmm...</h1>
+          <p>You can't edit your own profile using this page...</p>
+          <Link to='/admin/users' className='btn btn-primary my-3'>
+            Back user List
+          </Link>{' '}
+          <Link to='/profile' className='btn btn-light my-3'>
+            Go to my profile page instead
+          </Link>
+        </FormContainer>
+      </>
     );
   return (
     <>
+      <Meta title='Proshop | Admin' />
       <Link to='/admin/users' className='btn btn-light my-3'>
         Go Back
       </Link>

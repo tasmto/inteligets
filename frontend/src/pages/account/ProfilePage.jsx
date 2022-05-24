@@ -9,6 +9,7 @@ import { getUserDetails, updateUserProfile } from '../../actions/userActions';
 import { USER_UPDATE_RESET } from '../../constants/userConstants';
 import { listMyOrders } from '../../actions/orderActions';
 import OrdersTable from '../../features/orders/OrdersTable';
+import Meta from '../../components/Meta';
 const ProfilePage = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -69,6 +70,7 @@ const ProfilePage = () => {
 
   return (
     <Row>
+      <Meta title='Proshop | My Profile' />
       <Col md={4}>
         <h2>User Profile</h2>
         {error ? (

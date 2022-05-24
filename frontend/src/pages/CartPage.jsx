@@ -19,6 +19,7 @@ import {
 } from 'react-bootstrap';
 import { addToCart, removeFromCart } from '../actions/cartActions';
 import { calcLength } from 'framer-motion';
+import Meta from '../components/Meta';
 
 const Cart = () => {
   const params = useParams();
@@ -41,6 +42,7 @@ const Cart = () => {
   };
   return (
     <Row className='mt-5 mb-4'>
+      <Meta title='Proshop | Cart' />
       <Col md={8}>
         <h1>Shopping Cart:</h1>
         {/* @todo have a gif in the cart empty */}

@@ -6,6 +6,7 @@ import Message from '../../components/Message';
 import Loader from '../../components/Loader';
 import { login } from '../../actions/userActions';
 import FormContainer from '../../components/FormContainer';
+import Meta from '../../components/Meta';
 
 const LoginPage = () => {
   const [email, setEmail] = useState('');
@@ -32,6 +33,7 @@ const LoginPage = () => {
 
   return (
     <FormContainer>
+      <Meta title='Proshop | Welcome back?' />
       <h1>Sign In</h1>
       {error && <Message variant='danger'>{error}</Message>}
       {!loading ? (

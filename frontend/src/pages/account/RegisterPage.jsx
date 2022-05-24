@@ -6,6 +6,7 @@ import Message from '../../components/Message';
 import Loader from '../../components/Loader';
 import { register } from '../../actions/userActions';
 import FormContainer from '../../components/FormContainer';
+import Meta from '../../components/Meta';
 
 const RegisterPage = () => {
   const [email, setEmail] = useState('');
@@ -47,6 +48,7 @@ const RegisterPage = () => {
 
   return (
     <FormContainer>
+      <Meta title='Proshop | Sign up' />
       <h1>Sign Up</h1>
       {error && <Message variant='danger'>{error}</Message>}
       {!loading ? (

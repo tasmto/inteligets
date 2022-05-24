@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import FormContainer from '../../components/FormContainer';
 import { saveShippingAddress } from '../../actions/cartActions';
 import CheckoutSteps from '../../components/CheckoutSteps';
+import Meta from '../../components/Meta';
 
 const ShippingPage = () => {
   const navigate = useNavigate();
@@ -31,6 +32,7 @@ const ShippingPage = () => {
   };
   return (
     <>
+      <Meta title='Proshop | Checkout' />
       <CheckoutSteps />
       <FormContainer>
         <h1>Shipping</h1>

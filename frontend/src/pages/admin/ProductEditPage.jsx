@@ -18,6 +18,7 @@ import {
   PRODUCT_UPDATE_RESET,
 } from '../../constants/productConstants';
 import { updateProduct } from '../../actions/productActions';
+import Meta from '../../components/Meta';
 
 const ProductEditPage = () => {
   const [productData, setProductData] = useState({
@@ -125,6 +126,7 @@ const ProductEditPage = () => {
 
   return (
     <>
+      <Meta title='Proshop | Admin' />
       <Link to='/admin/products' className='btn btn-light my-3'>
         Go Back
       </Link>

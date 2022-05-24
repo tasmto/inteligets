@@ -5,7 +5,6 @@ import asyncHandler from 'express-async-handler';
  * @description: Fetches all products
  * @route        GET /api/products
  * @access       Public
- *@todo errors not propagating through correctly
  */
 
 const getProducts = asyncHandler(async (req, res) => {
@@ -139,6 +138,18 @@ const createProductReview = asyncHandler(async (req, res) => {
   }
 });
 
+/**
+ * @description: Get top rated products
+ * @route        GET /api/products/top
+ * @access       Public
+ */
+
+const getTopProducts = asyncHandler(async (req, res) => {
+  const amount = Number(req.query.limit) || 4;
+  const products = await Product.find({}).sort({ rating: -1 }).limit(amount);
+  res.json(products);
+});
+
 export {
   getProductById,
   getProducts,
@@ -146,4 +157,5 @@ export {
   updateProduct,
   createProduct,
   createProductReview,
+  getTopProducts,
 };

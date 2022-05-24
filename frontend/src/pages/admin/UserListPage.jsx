@@ -8,6 +8,7 @@ import Loader from '../../components/Loader';
 import { AiFillEye, AiFillEdit, AiFillDelete } from 'react-icons/ai';
 import { deleteUser, listUsers } from '../../actions/userActions';
 import CustomModal from '../../features/modals/Modal';
+import Meta from '../../components/Meta';
 
 const UserListPage = () => {
   const dispatch = useDispatch();
@@ -36,6 +37,7 @@ const UserListPage = () => {
 
   return (
     <>
+      <Meta title='Proshop | Admin' />
       <h1>Users</h1>
       {loading ? (
         <Loader />

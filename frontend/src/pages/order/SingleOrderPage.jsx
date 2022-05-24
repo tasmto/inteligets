@@ -19,6 +19,7 @@ import {
   ORDER_DELIVER_RESET,
   ORDER_PAY_RESET,
 } from '../../constants/orderConstants';
+import Meta from '../../components/Meta';
 
 const SingleOrderPage = () => {
   const params = useParams();
@@ -59,6 +60,7 @@ const SingleOrderPage = () => {
 
   return (
     <>
+      <Meta title='Proshop | Order' />
       {error ? (
         <Message variant='danger'>{error}</Message>
       ) : loading || loadingDeliver ? (

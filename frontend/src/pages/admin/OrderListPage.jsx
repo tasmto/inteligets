@@ -10,6 +10,7 @@ import { deleteUser, listUsers } from '../../actions/userActions';
 import CustomModal from '../../features/modals/Modal';
 import { listOrders } from '../../actions/orderActions';
 import { FormatCurrency, FormatDate } from '../../utilities/FormatNumber';
+import Meta from '../../components/Meta';
 
 const OrderListPage = () => {
   const dispatch = useDispatch();
@@ -30,6 +31,7 @@ const OrderListPage = () => {
 
   return (
     <>
+      <Meta title='Proshop | Admin' />
       <h1>Orders</h1>
       {loading ? (
         <Loader />

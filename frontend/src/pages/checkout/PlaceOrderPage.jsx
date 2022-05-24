@@ -14,6 +14,7 @@ import Message from '../../components/Message';
 import CheckoutSteps from '../../components/CheckoutSteps';
 import { createOrder } from '../../actions/orderActions';
 import { shippingPrice, taxPercentage } from '../../constants/magicNumbers';
+import Meta from '../../components/Meta';
 
 const PlaceOrderPage = () => {
   const dispatch = useDispatch();
@@ -56,6 +57,7 @@ const PlaceOrderPage = () => {
 
   return (
     <>
+      <Meta title='Proshop | Place Order' />
       <CheckoutSteps />
       <Row>
         <Col md={8} xs={{ order: 'last' }}>

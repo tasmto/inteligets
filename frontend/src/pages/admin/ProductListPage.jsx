@@ -29,6 +29,7 @@ import CustomModal from '../../features/modals/Modal';
 import { FormatCurrency } from '../../utilities/FormatNumber';
 import { PRODUCT_CREATE_RESET } from '../../constants/productConstants';
 import PaginationComponent from '../../features/pagination/PaginationComponent';
+import Meta from '../../components/Meta';
 
 const ProductListPage = () => {
   const dispatch = useDispatch();
@@ -83,6 +84,7 @@ const ProductListPage = () => {
 
   return (
     <>
+      <Meta title='Proshop | Admin' />
       <Row className='align-items-center'>
         <Col>
           <h1>Products</h1>

@@ -7,6 +7,8 @@ import Product from '../components/Product';
 import Message from '../components/Message';
 import Loader from '../components/Loader';
 import PaginationComponent from '../features/pagination/PaginationComponent';
+import ProductCarousel from '../features/sliders/ProductCarousel';
+import Meta from '../components/Meta';
 
 const HomePage = () => {
   const dispatch = useDispatch();
@@ -24,6 +26,8 @@ const HomePage = () => {
 
   return (
     <>
+      <Meta />
+      {!searchTerm && <ProductCarousel />}
       <h1 className='mt-5 mb-3'>
         {searchTerm ? (
           <span>

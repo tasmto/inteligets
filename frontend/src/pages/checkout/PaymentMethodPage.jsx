@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import FormContainer from '../../components/FormContainer';
 import { savePaymentMethod } from '../../actions/cartActions';
 import CheckoutSteps from '../../components/CheckoutSteps';
+import Meta from '../../components/Meta';
 
 const PaymentMethodPage = () => {
   const navigate = useNavigate();
@@ -27,6 +28,7 @@ const PaymentMethodPage = () => {
   };
   return (
     <>
+      <Meta title='Proshop | Choose payment method' />
       <CheckoutSteps />
       <FormContainer>
         <h1>Payment Methods:</h1>

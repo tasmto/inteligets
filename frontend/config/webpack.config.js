@@ -295,6 +295,8 @@ module.exports = function (webpackEnv) {
     },
     resolve: {
       fallback: {
+        stream: require.resolve('stream-browserify'),
+        inherits_browser: require.resolve('stream-browserify'),
         querystring: false,
         url: false,
         fs: false,

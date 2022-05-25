@@ -11,7 +11,6 @@ import CustomModal from '../../features/modals/Modal';
 import { listOrders } from '../../actions/orderActions';
 import { FormatCurrency, FormatDate } from '../../utilities/FormatNumber';
 import Meta from '../../components/Meta';
-import { toast } from 'react-toastify';
 
 const OrderListPage = () => {
   const dispatch = useDispatch();

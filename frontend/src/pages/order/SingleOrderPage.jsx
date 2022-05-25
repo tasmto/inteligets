@@ -44,7 +44,6 @@ const SingleOrderPage = () => {
 
   useEffect(() => {
     dispatch(getOrderDetails(params.orderId));
-    console.log(successDeliver);
   }, [params.orderId, dispatch, successPay, successDeliver]);
 
   // * Reset the order deliver and pay every time the page loads
@@ -60,10 +59,12 @@ const SingleOrderPage = () => {
 
   return (
     <>
-      <Meta title='Proshop | Order' />
+      <Meta title='Inteli|gets | Order' />
       {error ? (
         <Message variant='danger'>{error}</Message>
       ) : loading || loadingDeliver ? (
+        <Loader />
+      ) : loadingPay ? (
         <Loader />
       ) : (
         <>
@@ -156,7 +157,7 @@ const SingleOrderPage = () => {
               {order.isPaid ? (
                 <Message variant='success'>Paid on: {order?.paidAt}</Message>
               ) : (
-                <Message variant='danger'>Not paid</Message>
+                <Message variant='warning'>Not paid yet</Message>
               )}
             </Col>
 

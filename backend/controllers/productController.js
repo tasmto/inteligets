@@ -115,7 +115,7 @@ const createProductReview = asyncHandler(async (req, res) => {
     );
     if (alreadyReviewed) {
       res.status(400);
-      throw new Error('Product already reviewed');
+      throw new Error('This account has already reviewed this product.');
     }
     const review = {
       name: req.user.name,

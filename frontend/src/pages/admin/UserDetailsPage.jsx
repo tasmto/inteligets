@@ -50,7 +50,7 @@ const UserDetailsPage = () => {
 
   return (
     <>
-      <Meta title='Proshop | Admin' />
+      <Meta title='Inteli|gets | Admin' />
       <Link to='/admin/users' className='btn btn-light my-3'>
         Go Back
       </Link>

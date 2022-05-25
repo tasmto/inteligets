@@ -14,6 +14,7 @@ import {
 } from 'react-bootstrap';
 import Rating from '../../components/Rating';
 import axios from 'axios';
+import LoginToDemoAccountsButtons from '../../features/instantAccounts/LoginToDemoAccountsButtons';
 import { useDispatch, useSelector } from 'react-redux';
 import {
   listProductDetails,
@@ -108,7 +109,7 @@ const SingleProduct = () => {
                     src={product?.image}
                     alt={product?.name}
                     fluid
-                    className={`product-canvas-image img-fluid ${
+                    className={`product-canvas-image img-fluid   ${
                       loading && 'placeholder'
                     } `}
                   />
@@ -164,8 +165,29 @@ const SingleProduct = () => {
                 </ListGroup.Item>
                 {product.countInStock > 0 && (
                   <ListGroup.Item>
-                    <Row>
-                      <Col xs='auto'>Qty</Col>
+                    <Row className='py-3'>
+                      <Col>
+                        {loading ? (
+                          <div className='placeholder-wave'>
+                            <Button
+                              tabIndex={-1}
+                              className='btn btn-primary disabled placeholder col-12 bg-primary'
+                            ></Button>
+                          </div>
+                        ) : (
+                          <button
+                            disabled={product.countInStock === 0}
+                            className='btn btn-primary btn-block '
+                            type='button'
+                            onClick={addToCartHandler}
+                          >
+                            {product.countInStock === 0
+                              ? 'Out of Stock'
+                              : 'Add to cart'}
+                          </button>
+                        )}
+                      </Col>
+
                       <Col xs='4'>
                         {loading ? (
                           <p className='placeholder-glow mb-0'>
@@ -173,7 +195,7 @@ const SingleProduct = () => {
                             <span className='placeholder  placeholder-lg col-4 bg-primary'></span>
                           </p>
                         ) : (
-                          <Form.Control
+                          <Form.Select
                             as='select'
                             value={qty}
                             onChange={(e) => setQty(e.target.value)}
@@ -185,33 +207,13 @@ const SingleProduct = () => {
                                 </option>
                               )
                             )}
-                          </Form.Control>
+                          </Form.Select>
                         )}
                       </Col>
                     </Row>
                   </ListGroup.Item>
                 )}
-                <ListGroup.Item>
-                  {loading ? (
-                    <div className='placeholder-wave'>
-                      <Button
-                        tabIndex={-1}
-                        className='btn btn-primary disabled placeholder col-12 bg-primary'
-                      ></Button>
-                    </div>
-                  ) : (
-                    <button
-                      disabled={product.countInStock === 0}
-                      className='btn btn-primary btn-block my-3 rounded-pill'
-                      type='button'
-                      onClick={addToCartHandler}
-                    >
-                      {product.countInStock === 0
-                        ? 'Out of Stock'
-                        : 'Add to cart'}
-                    </button>
-                  )}
-                </ListGroup.Item>
+                <ListGroup.Item></ListGroup.Item>
                 <ListGroup.Item>
                   {loading ? (
                     <p className='mt-3 placeholder-glow'>
@@ -227,7 +229,7 @@ const SingleProduct = () => {
               </ListGroup>
             </Col>
           </Row>
-          <Row>
+          <Row className='mt-5 d-flex-md align-items-start'>
             <Col md={6}>
               <h2>Reviews</h2>
               {product.reviews.length === 0 ? (
@@ -236,33 +238,38 @@ const SingleProduct = () => {
                 <ListGroup variant='flush'>
                   {product.reviews.map((review) => (
                     <ListGroup.Item key={review._id}>
-                      <h5>
-                        <strong>{review.name}</strong>
-                      </h5>
-                      <Rating rating={review.rating} />
-                      <p>
-                        {FormatDate(review.createdAt, {
-                          month: 'short',
-                          year: 'numeric',
-                          weekday: 'long',
-                        })}
+                      <div className='d-flex align-items-center justify-content-between'>
+                        <h5 className='my-2 me-3'>
+                          <strong>{review.name}</strong>
+                        </h5>
+                        <div className='d-flex align-items-center justify-content-between '>
+                          <p className='my-3 me-3 text-muted fs-6'>
+                            {FormatDate(review.createdAt, {
+                              month: 'short',
+                              year: 'numeric',
+                              weekday: 'long',
+                            })}
+                          </p>{' '}
+                          <Rating rating={review.rating} />
+                        </div>
+                      </div>
+
+                      <p className='text-secondary'>
+                        <strong className='text-primary'>Comment: </strong>
+                        {review.comment}
                       </p>
-                      <p>{review.comment}</p>
                     </ListGroup.Item>
                   ))}
                 </ListGroup>
               )}
             </Col>
-            <Col md={6}>
+            <Col md={6} className='position-sticky'>
               <ListGroup>
                 <ListGroup.Item>
                   <h2>Write a Review</h2>
 
                   {userInfo ? (
                     <Form onSubmit={submitReviewHandler}>
-                      {errorCreateReview && (
-                        <Message variant='danger'>{errorCreateReview}</Message>
-                      )}
                       <Form.Group controlId='rating' as={Row} className='mb-3'>
                         <Form.Label sm='2'>Rating</Form.Label>
                         <Col>
@@ -286,8 +293,12 @@ const SingleProduct = () => {
                           onChange={onMutateWriteReviewForm}
                           as='textarea'
                           rows={3}
+                          maxLength={300}
                         />
                       </Form.Group>
+                      {errorCreateReview && (
+                        <Message variant='warning'>{errorCreateReview}</Message>
+                      )}
                       <Button
                         type='submit'
                         variant='primary'
@@ -302,6 +313,7 @@ const SingleProduct = () => {
                       <Link to='/login'>Login.</Link>
                       {'  '}
                       <Link to='/register'>Create an account instead.</Link>
+                      <LoginToDemoAccountsButtons />
                     </Message>
                   )}
                 </ListGroup.Item>

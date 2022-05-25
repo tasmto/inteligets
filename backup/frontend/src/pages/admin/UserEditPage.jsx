@@ -61,7 +61,7 @@ const UserEditPage = () => {
   if (!loading && user._id === userInfo._id)
     return (
       <>
-        <Meta title='Proshop | Wait a minute...' />
+        <Meta title='Inteli|gets | Wait a minute...' />
         <FormContainer>
           <h1>Ummmmm...</h1>
           <p>You can't edit your own profile using this page...</p>
@@ -76,7 +76,7 @@ const UserEditPage = () => {
     );
   return (
     <>
-      <Meta title='Proshop | Admin' />
+      <Meta title='Inteli|gets | Admin' />
       <Link to='/admin/users' className='btn btn-light my-3'>
         Go Back
       </Link>

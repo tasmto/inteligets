@@ -60,7 +60,7 @@ const SingleOrderPage = () => {
 
   return (
     <>
-      <Meta title='Proshop | Order' />
+      <Meta title='Inteli|gets | Order' />
       {error ? (
         <Message variant='danger'>{error}</Message>
       ) : loading || loadingDeliver ? (

@@ -126,7 +126,7 @@ const ProductEditPage = () => {
 
   return (
     <>
-      <Meta title='Proshop | Admin' />
+      <Meta title='Inteli|gets | Admin' />
       <Link to='/admin/products' className='btn btn-light my-3'>
         Go Back
       </Link>
@@ -220,12 +220,12 @@ const ProductEditPage = () => {
               <Button type='submit' variant='primary'>
                 Update Product
               </Button>
-              <Link
+              {/* <Link
                 to={`/admin/product/${productId}`}
                 className='btn btn-secondary my-3'
               >
                 Product Stats
-              </Link>
+              </Link> */}
               <Link
                 to={`/product/${productId}`}
                 className='btn btn-secondary my-3'

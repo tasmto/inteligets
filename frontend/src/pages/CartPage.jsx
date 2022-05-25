@@ -20,7 +20,7 @@ import {
 import { addToCart, removeFromCart } from '../actions/cartActions';
 import { calcLength } from 'framer-motion';
 import Meta from '../components/Meta';
-
+import { FormatCurrency } from '../utilities/FormatNumber';
 const Cart = () => {
   const params = useParams();
   const navigate = useNavigate();
@@ -42,7 +42,7 @@ const Cart = () => {
   };
   return (
     <Row className='mt-5 mb-4'>
-      <Meta title='Proshop | Cart' />
+      <Meta title='Inteli|gets | Cart' />
       <Col md={8}>
         <h1>Shopping Cart:</h1>
         {/* @todo have a gif in the cart empty */}
@@ -65,7 +65,7 @@ const Cart = () => {
                   <Col sm={3}>
                     <Link to={`/product/${item.product}`}>{item.name}</Link>
                   </Col>
-                  <Col sm={2}>R {item.price}</Col>
+                  <Col sm={2}>{FormatCurrency(item.price)}</Col>
                   <Col sm={2}>
                     <Form.Control
                       as='select'
@@ -109,10 +109,12 @@ const Cart = () => {
                 }, 0)}
                 ) items
               </h2>
-              R{' '}
-              {cartItems.reduce((total, item) => {
-                return (total += Number(item.qty * item.price));
-              }, 0)}
+
+              {FormatCurrency(
+                cartItems.reduce((total, item) => {
+                  return (total += Number(item.qty * item.price));
+                }, 0)
+              )}
             </ListGroup.Item>
             <ListGroup.Item>
               <Button

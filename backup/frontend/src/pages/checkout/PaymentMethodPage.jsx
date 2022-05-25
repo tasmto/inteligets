@@ -28,7 +28,7 @@ const PaymentMethodPage = () => {
   };
   return (
     <>
-      <Meta title='Proshop | Choose payment method' />
+      <Meta title='Inteli|gets | Choose payment method' />
       <CheckoutSteps />
       <FormContainer>
         <h1>Payment Methods:</h1>

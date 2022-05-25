@@ -42,7 +42,7 @@ const Cart = () => {
   };
   return (
     <Row className='mt-5 mb-4'>
-      <Meta title='Proshop | Cart' />
+      <Meta title='Inteli|gets | Cart' />
       <Col md={8}>
         <h1>Shopping Cart:</h1>
         {/* @todo have a gif in the cart empty */}

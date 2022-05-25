@@ -33,7 +33,7 @@ const LoginPage = () => {
 
   return (
     <FormContainer>
-      <Meta title='Proshop | Welcome back?' />
+      <Meta title='Inteli|gets | Welcome back?' />
       <h1>Sign In</h1>
       {error && <Message variant='danger'>{error}</Message>}
       {!loading ? (

@@ -32,7 +32,7 @@ const ShippingPage = () => {
   };
   return (
     <>
-      <Meta title='Proshop | Checkout' />
+      <Meta title='Inteli|gets | Checkout' />
       <CheckoutSteps />
       <FormContainer>
         <h1>Shipping</h1>

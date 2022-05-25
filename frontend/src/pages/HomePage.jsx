@@ -9,6 +9,7 @@ import Loader from '../components/Loader';
 import PaginationComponent from '../features/pagination/PaginationComponent';
 import ProductCarousel from '../features/sliders/ProductCarousel';
 import Meta from '../components/Meta';
+import HomePageHero from '../features/heros/HomePageHero';
 
 const HomePage = () => {
   const dispatch = useDispatch();
@@ -27,14 +28,15 @@ const HomePage = () => {
   return (
     <>
       <Meta />
+
       {searchTerm ? (
         <Link className='btn btn-light' to='/'>
           Go Back
         </Link>
       ) : (
-        <ProductCarousel />
+        <HomePageHero />
       )}
-      <h1 className='mt-2 mb-3'>
+      <h1 className='mt-3 mt-md-5 mb-1'>
         {searchTerm ? (
           <span>
             Searching for: <i className='text-secondary'>"{searchTerm}"</i>
@@ -53,7 +55,7 @@ const HomePage = () => {
         <>
           <Row>
             {products.map((item) => (
-              <Col key={item._id} sm={12} md={6} lg={4} xl={3}>
+              <Col key={item._id} sm={12} md={6} lg={4}>
                 {loading ? <Spinner /> : <Product product={item} />}
               </Col>
             ))}
@@ -61,6 +63,7 @@ const HomePage = () => {
           <PaginationComponent pages={pages} page={page} keyword={searchTerm} />
         </>
       )}
+      {!searchTerm && <ProductCarousel />}
     </>
   );
 };

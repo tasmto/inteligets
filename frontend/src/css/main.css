@@ -2,6 +2,11 @@
 
 main {
     min-height: 80vh;
+    margin-top: 120px;
+}
+
+footer {
+    margin-top: 50px
 }
 
 h1 {
@@ -22,6 +27,10 @@ img {
     max-width: 100%;
 }
 
+.pointer {
+    cursor: pointer;
+}
+
 .btn-block {
     width: 100%;
 }
@@ -34,6 +43,11 @@ img {
 .product-canvas-image--outer {
     cursor: -webkit-grab;
     cursor: grab;
+}
+
+.icon-sm {
+    height: 16px;
+    width: 16px;
 }
 
 .icon {
@@ -83,4 +97,24 @@ img {
     .carousel-caption h2 {
         font-size: 2.5vw;
     }
+}
+
+/*  Cart Popup */
+.cart-popup {
+    top: 75px
+}
+
+
+.cart-popup>.modal-dialog {
+    margin-right: 10%;
+
+}
+
+.cart-popup .modal-content {
+    border-radius: 5px;
+}
+
+.cart-popup .modal-body {
+    max-height: 300px;
+    overflow-y: auto;
 }

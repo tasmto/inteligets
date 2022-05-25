@@ -31,7 +31,7 @@ const OrderListPage = () => {
 
   return (
     <>
-      <Meta title='Proshop | Admin' />
+      <Meta title='Inteli|gets | Admin' />
       <h1>Orders</h1>
       {loading ? (
         <Loader />

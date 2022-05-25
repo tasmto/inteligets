@@ -57,7 +57,7 @@ const PlaceOrderPage = () => {
 
   return (
     <>
-      <Meta title='Proshop | Place Order' />
+      <Meta title='Inteli|gets | Place Order' />
       <CheckoutSteps />
       <Row>
         <Col md={8} xs={{ order: 'last' }}>

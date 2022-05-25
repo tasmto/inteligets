@@ -48,7 +48,7 @@ const RegisterPage = () => {
 
   return (
     <FormContainer>
-      <Meta title='Proshop | Sign up' />
+      <Meta title='Inteli|gets | Sign up' />
       <h1>Sign Up</h1>
       {error && <Message variant='danger'>{error}</Message>}
       {!loading ? (

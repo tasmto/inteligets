@@ -70,7 +70,7 @@ const ProfilePage = () => {
 
   return (
     <Row>
-      <Meta title='Proshop | My Profile' />
+      <Meta title='Inteli|gets | My Profile' />
       <Col md={4}>
         <h2>User Profile</h2>
         {error ? (

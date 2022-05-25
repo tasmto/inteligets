@@ -84,7 +84,7 @@ const ProductListPage = () => {
 
   return (
     <>
-      <Meta title='Proshop | Admin' />
+      <Meta title='Inteli|gets | Admin' />
       <Row className='align-items-center'>
         <Col>
           <h1>Products</h1>

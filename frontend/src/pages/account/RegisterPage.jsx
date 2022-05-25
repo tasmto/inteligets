@@ -7,6 +7,7 @@ import Loader from '../../components/Loader';
 import { register } from '../../actions/userActions';
 import FormContainer from '../../components/FormContainer';
 import Meta from '../../components/Meta';
+import LoginToDemoAccountsButtons from '../../features/instantAccounts/LoginToDemoAccountsButtons';
 
 const RegisterPage = () => {
   const [email, setEmail] = useState('');
@@ -48,7 +49,7 @@ const RegisterPage = () => {
 
   return (
     <FormContainer>
-      <Meta title='Proshop | Sign up' />
+      <Meta title='Inteli|gets | Sign up' />
       <h1>Sign Up</h1>
       {error && <Message variant='danger'>{error}</Message>}
       {!loading ? (
@@ -105,6 +106,9 @@ const RegisterPage = () => {
               <Link to={redirect ? `/login?redirect=${redirect}` : '/login'}>
                 Sign In
               </Link>
+            </Col>
+            <Col sm={12}>
+              <LoginToDemoAccountsButtons />
             </Col>
           </Row>
         </>

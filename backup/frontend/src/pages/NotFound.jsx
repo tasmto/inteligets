@@ -9,7 +9,7 @@ const NotFound = () => {
   const navigate = useNavigate();
   return (
     <FormContainer>
-      <Meta title='Proshop | Eish...' />
+      <Meta title='Inteli|gets | Eish...' />
       <h1 style={{ fontSize: '5rem' }}>Woah there...</h1>
       <p>You seem to have stumbled on a page I haven't made yet...</p>
       <Button

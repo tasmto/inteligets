@@ -1,6 +1,7 @@
 import React, { PropTypes, useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate, Link } from 'react-router-dom';
+import { trimString } from '../../utilities/FormatString';
 import {
   Modal,
   Button,
@@ -55,7 +56,9 @@ const CartModal = ({ showPopUp, toggle }) => {
                   <Image src={item.image} alt={item.name} fluid rounded />
                 </Col>
                 <Col xs={4}>
-                  <Link to={`/product/${item.product}`}>{item.name}</Link>
+                  <Link to={`/product/${item.product}`}>
+                    {trimString(item.name)}
+                  </Link>
                 </Col>
                 <Col xs={2}>{FormatCurrency(item.price)}</Col>
                 <Col xs={2}>

@@ -28,7 +28,7 @@ const HomePageHero = () => {
   }, []);
 
   return (
-    <Card className='p-5 mb-4 bg-dark rounded-3 '>
+    <Card className='p-5 mb-5 bg-dark rounded-3 '>
       <Row>
         <Col md={6} className='d-flex align-items-center'>
           <Card.Body className='d-flex flex-column align-items-start'>

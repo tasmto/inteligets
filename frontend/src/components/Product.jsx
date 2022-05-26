@@ -1,16 +1,12 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { Card, Row, Col } from 'react-bootstrap';
-import Rating from './Rating';
-import { motion, AnimatePresence } from 'framer-motion';
+
 import { Link } from 'react-router-dom';
-import { addToCart, removeFromCart } from '../actions/cartActions';
-import {
-  RiStarFill,
-  RiShoppingBag2Fill,
-  RiShoppingBag3Line,
-} from 'react-icons/ri';
-import { useDispatch, useSelector } from 'react-redux';
+
+import { RiStarFill } from 'react-icons/ri';
+
 import ProductAddToCartButton from '../features/productSearch/ProductAddToCartButton';
+import { trimString } from '../utilities/FormatString';
 
 export default function Product({ product }) {
   return (
@@ -30,7 +26,7 @@ export default function Product({ product }) {
               className='text-decoration-none'
             >
               <Card.Title as='div' className=' mb-2'>
-                {product.name}
+                {trimString(product.name)}
               </Card.Title>
 
               <Card.Text as='h3'>${product.price}</Card.Text>

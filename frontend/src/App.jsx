@@ -67,6 +67,10 @@ function App() {
                 path='/admin/product/:productId/edit'
                 element={<ProductEditPage />}
               />
+              <Route
+                path='/admin/product/:productId'
+                element={<SingleProduct />}
+              />
               <Route path='/admin/users' element={<UserListPage />} />
               <Route path='/admin/user/:userId' element={<UserDetailsPage />} />
               <Route

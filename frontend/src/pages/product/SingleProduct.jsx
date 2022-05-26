@@ -213,7 +213,18 @@ const SingleProduct = () => {
                     </Row>
                   </ListGroup.Item>
                 )}
-                <ListGroup.Item></ListGroup.Item>
+                {userInfo.isAdmin && (
+                  <ListGroup.Item>
+                    <button
+                      className='btn btn-outline-primary btn-block '
+                      onClick={() =>
+                        navigate(`/admin/product/${product._id}/edit`)
+                      }
+                    >
+                      Edit Product
+                    </button>
+                  </ListGroup.Item>
+                )}
                 <ListGroup.Item>
                   {loading ? (
                     <p className='mt-3 placeholder-glow'>

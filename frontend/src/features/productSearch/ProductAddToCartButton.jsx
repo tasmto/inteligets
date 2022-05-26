@@ -4,7 +4,7 @@ import { Card, Row, Col } from 'react-bootstrap';
 import { motion, AnimatePresence } from 'framer-motion';
 
 import { addToCart, removeFromCart } from '../../actions/cartActions';
-import { RiShoppingBag2Fill, RiShoppingBag3Line } from 'react-icons/ri';
+import { RiShoppingBag2Fill, RiShoppingBag3Fill } from 'react-icons/ri';
 import { useDispatch, useSelector } from 'react-redux';
 
 const ProductAddToCartButton = ({ product }) => {
@@ -19,13 +19,13 @@ const ProductAddToCartButton = ({ product }) => {
       y: 2,
       scale: 0.95,
     },
-    initialIn: { rotate: [20], opacity: 0 },
-    animateIn: { rotate: [20, -10, 0], opacity: 1 },
-    exitIn: { rotate: [0, 20], opacity: [1, 0] },
+    initialIn: { rotateX: [40], opacity: 0 },
+    animateIn: { rotateX: [40, -10, 0], opacity: 1 },
+    exitIn: { rotateX: [0, 40], opacity: [1, 0] },
 
-    initialOut: { rotate: [-20], opacity: 0 },
-    animateOut: { rotate: [-20, 10, 0], opacity: 1 },
-    exitOut: { rotate: [0, -20], opacity: [1, 0] },
+    initialOut: { rotateX: [-40], opacity: 0 },
+    animateOut: { rotateX: [-40, 10, 0], opacity: 1 },
+    exitOut: { rotateX: [0, -40], opacity: [1, 0] },
   };
 
   const cart = useSelector((state) => state.cart);
@@ -45,6 +45,7 @@ const ProductAddToCartButton = ({ product }) => {
           initial={animations.initialOut}
           animate={animations.animateOut}
           exit={animations.exitOut}
+          style={{ originX: 0 }}
         >
           <RiShoppingBag2Fill
             className='icon-xl text-warning pointer'
@@ -58,8 +59,9 @@ const ProductAddToCartButton = ({ product }) => {
           initial={animations.initialIn}
           animate={animations.animateIn}
           exit={animations.exitIn}
+          style={{ originX: 0 }}
         >
-          <RiShoppingBag3Line
+          <RiShoppingBag3Fill
             className='icon-xl text-muted pointer'
             onClick={addToCartHandler}
             title='Remove from cart'

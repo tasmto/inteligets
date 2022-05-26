@@ -34,7 +34,9 @@ const HomePage = () => {
           Go Back
         </Link>
       ) : (
-        <HomePageHero />
+        <div className='mb-5'>
+          <HomePageHero />
+        </div>
       )}
       <h1 className='mt-3 mt-md-5 mb-1'>
         {searchTerm ? (
@@ -63,7 +65,11 @@ const HomePage = () => {
           <PaginationComponent pages={pages} page={page} keyword={searchTerm} />
         </>
       )}
-      {!searchTerm && <ProductCarousel />}
+      {!searchTerm && (
+        <div className='mt-5'>
+          <ProductCarousel />
+        </div>
+      )}
     </>
   );
 };

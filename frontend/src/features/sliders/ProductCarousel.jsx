@@ -6,6 +6,7 @@ import Loader from '../../components/Loader';
 import Message from '../../components/Message';
 import { listTopProducts } from '../../actions/productActions';
 import { FormatCurrency } from '../../utilities/FormatNumber';
+import { trimString } from '../../utilities/FormatString';
 
 const ProductCarousel = () => {
   const dispatch = useDispatch();
@@ -26,7 +27,7 @@ const ProductCarousel = () => {
             <Image src={product.image} alt={product.name} fluid />
             <Carousel.Caption className='carousel-caption'>
               <h2>
-                {product.name} ({FormatCurrency(product.price)})
+                {trimString(product.name, 30)} ({FormatCurrency(product.price)})
               </h2>
             </Carousel.Caption>
           </Link>

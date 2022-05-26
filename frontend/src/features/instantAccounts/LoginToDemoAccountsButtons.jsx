@@ -12,7 +12,7 @@ const LoginToDemoAccountsButtons = () => {
 
   return (
     <ButtonToolbar className='mt-3'>
-      <ButtonGroup size='sm' className='me-2'>
+      <ButtonGroup size='sm' className='me-2 mt-1'>
         <Button
           className='btn btn-primary shadow'
           type='button'
@@ -42,7 +42,7 @@ const LoginToDemoAccountsButtons = () => {
           Login as a regular user
         </Button>
       </ButtonGroup>
-      <ButtonGroup size='sm'>
+      <ButtonGroup className='mt-1' size='sm'>
         <Button
           className='btn btn-warning shadow-lg'
           type='button'

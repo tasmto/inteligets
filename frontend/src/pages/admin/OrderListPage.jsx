@@ -37,7 +37,7 @@ const OrderListPage = () => {
         <Loader />
       ) : error ? (
         <Message variant='danger'>{error}</Message>
-      ) : orders?.length === 0 ? (
+      ) : orders?.length === 0 || !orders ? (
         <Message variant='info'>Seems like there are no orders yet</Message>
       ) : (
         <Table

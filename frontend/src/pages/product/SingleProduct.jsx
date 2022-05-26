@@ -213,7 +213,7 @@ const SingleProduct = () => {
                     </Row>
                   </ListGroup.Item>
                 )}
-                {userInfo.isAdmin && (
+                {userInfo && userInfo.isAdmin && (
                   <ListGroup.Item>
                     <button
                       className='btn btn-outline-primary btn-block '

@@ -28,7 +28,7 @@ function App() {
     <Router>
       <Header />
       <ScrollToTop />
-      <main className='py-3'>
+      <main className='py-3 '>
         <Container>
           <Routes>
             <Route path='*' exact element={<NotFound />} />

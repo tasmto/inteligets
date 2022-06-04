@@ -21,11 +21,13 @@ import ProductListPage from './pages/admin/ProductListPage';
 import UserEditPage from './pages/admin/UserEditPage';
 import ProductEditPage from './pages/admin/ProductEditPage';
 import OrderListPage from './pages/admin/OrderListPage';
+import ScrollToTop from './features/scrollToTop/ScrollToTop';
 
 function App() {
   return (
     <Router>
       <Header />
+      <ScrollToTop />
       <main className='py-3'>
         <Container>
           <Routes>

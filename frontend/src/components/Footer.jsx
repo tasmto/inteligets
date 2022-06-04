@@ -16,8 +16,10 @@ const Footer = () => {
                 with Mongoose for the Database.
                 <br />
                 <br />
-                For this version I've enabled the PayPal SDK in Sandbox mode sor
-                feel free to test out the entire checkout process!
+                <strong>
+                  For this version I've enabled the PayPal SDK in Sandbox mode
+                  so feel free to test out the entire checkout process!
+                </strong>
               </p>
               <a
                 className='btn btn-outline-light'

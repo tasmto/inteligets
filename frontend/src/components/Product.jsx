@@ -43,15 +43,18 @@ export default function Product({ product }) {
           style={{ minHeight: '250px' }}
         />
       </a>
-      <Card.Body className='mt-1'>
-        <Link to={`/product/${product._id}`} className='text-decoration-none'>
-          <Row className='justify-content-between'>
-            <Col>
+      <Card.Body className='mt-1 px-0'>
+        <Link
+          to={`/product/${product._id}`}
+          className='text-decoration-none block w-100'
+        >
+          <Row className='justify-content-between w-100 m-0'>
+            <Col xs={6}>
               <Card.Title as='div' className=' mb-2'>
                 {trimString(product.name)}
               </Card.Title>
             </Col>
-            <Col>
+            <Col xs={6} style={{ justifySelf: 'end', textAlign: 'right' }}>
               <Card.Text as='h3'>${product.price}</Card.Text>
             </Col>
           </Row>

@@ -11,10 +11,10 @@ const LoginToDemoAccountsButtons = () => {
   const navigate = useNavigate();
 
   return (
-    <ButtonToolbar className='mt-3'>
-      <ButtonGroup size='sm' className='me-2 mt-1'>
+    <ButtonToolbar className='mt-3 d-md-flex w-100'>
+      <ButtonGroup className='mt-1 w-100' size='sm'>
         <Button
-          className='btn btn-primary shadow'
+          className='btn btn-primary shadow  square'
           type='button'
           onClick={() => {
             toast.success(
@@ -28,7 +28,7 @@ const LoginToDemoAccountsButtons = () => {
           Login as an Admin
         </Button>
         <Button
-          className='btn btn-info shadow'
+          className='btn btn-info shadow square'
           type='button'
           onClick={() => {
             toast.success(
@@ -41,10 +41,9 @@ const LoginToDemoAccountsButtons = () => {
         >
           Login as a regular user
         </Button>
-      </ButtonGroup>
-      <ButtonGroup className='mt-1' size='sm'>
+
         <Button
-          className='btn btn-warning shadow-lg'
+          className='btn btn-warning shadow-lg square'
           type='button'
           onClick={() => {
             navigate('/register');

@@ -56,20 +56,26 @@ const HomePage = () => {
       ) : (
         <>
           <Row>
-            {products.map((item) => (
-              <Col key={item._id} sm={12} md={6} lg={4}>
-                {loading ? <Spinner /> : <Product product={item} />}
-              </Col>
-            ))}
+            {products.length ? (
+              products.map((item) => (
+                <Col key={item._id} sm={12} md={6} lg={4}>
+                  {loading ? <Spinner /> : <Product product={item} />}
+                </Col>
+              ))
+            ) : (
+              <h1 className='display-1 fw-bold text-muted'>
+                Sorry no products were found...
+              </h1>
+            )}
           </Row>
           <PaginationComponent pages={pages} page={page} keyword={searchTerm} />
         </>
       )}
-      {!searchTerm && (
+      {/* {!searchTerm && (
         <div className='mt-5'>
           <ProductCarousel />
         </div>
-      )}
+      )} */}
     </>
   );
 };

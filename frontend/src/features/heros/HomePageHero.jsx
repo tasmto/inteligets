@@ -16,26 +16,32 @@ import accounts from '../../utilities/LoginDemoAccounts';
 import { toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
 import LoginToDemoAccountsButtons from '../instantAccounts/LoginToDemoAccountsButtons';
+import { Link } from 'react-router-dom';
 const HomePageHero = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const productDetails = useSelector((state) => state.productDetails);
-  const { loading, product, error } = productDetails;
-
-  // *Reset review on page load and get product details
-  useEffect(() => {
-    dispatch(listProductDetails('626887852959f8820baa5e6f'));
-  }, []);
 
   return (
-    <Card className='p-5 mb-5 bg-dark rounded-3 '>
-      <Row>
-        <Col md={6} className='d-flex align-items-center'>
+    <Card
+      className='p-5 py-3 mb-5 bg-dark '
+      style={{
+        backgroundImage: 'url("/images/hero-background.jpg")',
+        backgroundSize: 'cover',
+        backgroundRepeat: 'no-repeat',
+        backgroundAttachment: 'fixed',
+        borderRadius: '1rem',
+      }}
+    >
+      <Row className=' justify-content-between'>
+        <Col lg={6} className='d-flex align-items-center'>
           <Card.Body className='d-flex flex-column align-items-start'>
-            <h1 className='display-6 fw-bold text-light'>
-              Welcome to Inteli<span className='text-muted'>|gets</span>
+            <h1 className='display-2 fw-bold text-light'>
+              Inteli<span className='text-dark'>|gets</span>
             </h1>
-            <p className='fs-4 text-muted'>
+            <p
+              className='fs-4  text-dark'
+              style={{ lineHeight: '1.2rem', letterSpacing: '0.05rem' }}
+            >
               A fully functional{' '}
               <span className='text-light'>fullstack e-commerce store</span>{' '}
               that supports multiple user roles,{' '}
@@ -48,31 +54,22 @@ const HomePageHero = () => {
           </Card.Body>
         </Col>
         <Col
-          md={6}
-          className='position-relative align-self-center'
-          style={{ maxHeight: '350px' }}
+          lg={6}
+          className='position-relative align-self-center d-none d-lg-block'
+          style={{ maxHeight: '350px', transform: 'translateY(0%)' }}
         >
-          {!loading && (
-            <>
-              <Image
-                src={product.image}
-                fluid
-                className='shadow-lg pointer'
-                style={{ height: '100%', objectFit: 'cover' }}
-                rounded
-                onClick={() => navigate(`/product/626887852959f8820baa5e6f`)}
-              />
-              <Button
-                size='md'
-                className='btn btn-success mt-5 position-absolute start-50 translate-middle-x'
-                type='button'
-                style={{ bottom: '-20px' }}
-                onClick={() => navigate(`/product/626887852959f8820baa5e6f`)}
-              >
-                View Product
-              </Button>
-            </>
-          )}
+          <Link to='/product/626887852959f8820baa5e70'>
+            <img
+              src='/images/iphone-hero-image.png'
+              loading='lazy'
+              className='w-100'
+              style={{
+                maxHeight: '450px',
+                maxWidth: '100%',
+                objectFit: 'contain',
+              }}
+            />
+          </Link>
         </Col>
       </Row>
     </Card>

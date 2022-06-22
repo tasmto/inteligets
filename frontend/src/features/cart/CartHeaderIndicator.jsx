@@ -36,7 +36,7 @@ const CartHeaderIndicator = () => {
     <>
       <Button
         size='sm'
-        className='btn btn-link ms-md-3 position-relative'
+        className='btn btn-link ms-md-3 position-relative bg-light'
         onClick={() => setShowPopup((curState) => !curState)}
       >
         <AnimatePresence>
@@ -53,7 +53,7 @@ const CartHeaderIndicator = () => {
         </AnimatePresence>
         <RiShoppingCartFill
           className={`icon me-1  ${
-            itemsInCart > 0 ? 'text-light' : 'text-muted'
+            itemsInCart > 0 ? 'text-primary' : 'text-muted'
           }`}
         />
       </Button>

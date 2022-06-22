@@ -4,7 +4,7 @@ import { Card, Row, Col } from 'react-bootstrap';
 import { motion, AnimatePresence } from 'framer-motion';
 
 import { addToCart, removeFromCart } from '../../actions/cartActions';
-import { RiShoppingBag2Fill, RiShoppingBag3Fill } from 'react-icons/ri';
+import { IoBasket, IoBasketOutline } from 'react-icons/io5';
 import { useDispatch, useSelector } from 'react-redux';
 
 const ProductAddToCartButton = ({ product }) => {
@@ -13,11 +13,11 @@ const ProductAddToCartButton = ({ product }) => {
   const animations = {
     hoverIn: {
       y: -2,
-      scale: 0.95,
+      scale: 0.98,
     },
     hoverOut: {
       y: 2,
-      scale: 0.95,
+      scale: 0.98,
     },
     initialIn: { rotateX: [40], opacity: 0 },
     animateIn: { rotateX: [40, -10, 0], opacity: 1 },
@@ -45,13 +45,18 @@ const ProductAddToCartButton = ({ product }) => {
           initial={animations.initialOut}
           animate={animations.animateOut}
           exit={animations.exitOut}
-          style={{ originX: 0 }}
+          style={{
+            originX: 0,
+            backgroundColor: 'rgba(255,255,255, 0.9)',
+            borderRadius: '5rem',
+          }}
+          onClick={removeFromCartHandler}
+          className='px-3 d-flex border-0 justify-content-center align-items-center'
         >
-          <RiShoppingBag2Fill
-            className='icon-xl text-warning pointer'
-            onClick={removeFromCartHandler}
-            title='Add to cart'
-          />
+          <span className='fs-5 me-2 fw-bold ' style={{ originX: 0 }}>
+            Remove from cart
+          </span>
+          <IoBasket className='icon-lg text-warning pointer' />
         </motion.div>
       ) : (
         <motion.div
@@ -59,13 +64,16 @@ const ProductAddToCartButton = ({ product }) => {
           initial={animations.initialIn}
           animate={animations.animateIn}
           exit={animations.exitIn}
-          style={{ originX: 0 }}
+          onClick={addToCartHandler}
+          style={{
+            originX: 0,
+            backgroundColor: 'rgba(255,255,255, 0.9)',
+            borderRadius: '5rem',
+          }}
+          className='px-3 d-flex border-0 justify-content-center align-items-center'
         >
-          <RiShoppingBag3Fill
-            className='icon-xl text-muted pointer'
-            onClick={addToCartHandler}
-            title='Remove from cart'
-          />
+          <span className='fs-5 me-2 fw-bold '>Add to cart</span>
+          <IoBasketOutline className='icon-lg text-muted pointer' />
         </motion.div>
       )}
     </AnimatePresence>

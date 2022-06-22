@@ -55,6 +55,11 @@ img {
     width: 24px;
 }
 
+.icon-lg {
+    height: 36px;
+    width: 36px;
+}
+
 .icon-xl {
     height: 45px;
     width: 45px;
@@ -117,4 +122,8 @@ img {
 .cart-popup .modal-body {
     max-height: 300px;
     overflow-y: auto;
+}
+
+* button:not(.square) {
+    border-radius: 5px !important;
 }

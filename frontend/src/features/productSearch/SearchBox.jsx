@@ -13,13 +13,16 @@ const SearchBox = ({ history }) => {
     return navigate(`/search/${searchTerm}`);
   };
   return (
-    <Form onSubmit={searchSubmitHandler} className='d-flex'>
+    <Form
+      onSubmit={searchSubmitHandler}
+      className='d-flex d-sm:flex d-md-none d-lg-flex'
+    >
       <Form.Control
         type='search'
         name='query'
         onChange={(e) => SetSearchTerm(e.target.value)}
         placeholder='Search Products...'
-        className='me-2 '
+        className='me-2 border border-muted'
       ></Form.Control>
 
       <Button

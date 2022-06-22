@@ -40,11 +40,11 @@ const Header = () => {
   return (
     <header>
       <Navbar
-        bg='primary'
-        variant='dark'
+        bg='light'
+        variant='light'
         fixed='top'
         expand='md'
-        className='mb-3'
+        className='mb-3 pt-3 pb-3 shadow-sm text-primary'
       >
         <Container>
           <Navbar.Brand
@@ -60,7 +60,7 @@ const Header = () => {
             id={`offcanvasNavbar-expand-md`}
             aria-labelledby={`offcanvasNavbarLabel-expand-md`}
             placement='end'
-            className='bg-primary'
+            className='bg-light'
           >
             <Offcanvas.Header closeButton>
               <Offcanvas.Title id={`offcanvasNavbarLabel-expand-md`}>
@@ -73,7 +73,7 @@ const Header = () => {
                   <NavDropdown
                     title='My Account'
                     id='username'
-                    className='mx-0'
+                    className='mx-0 m-auto'
                   >
                     <LinkContainer to='/profile'>
                       <NavDropdown.Item>
@@ -89,31 +89,31 @@ const Header = () => {
                 ) : (
                   <LinkContainer to='/login'>
                     <Nav.Link>
-                      <RiLogoutBoxRLine className='icon me-1' /> Sign In
+                      <RiLogoutBoxRLine className='icon me-1 my-auto' /> Sign In
                     </Nav.Link>
                   </LinkContainer>
                 )}
                 {userInfo && userInfo.isAdmin && (
-                  <NavDropdown title='Admin' id='admin' className='me-2'>
+                  <div className='ms-2 d-md-flex  align-items-center text-md-center'>
                     <LinkContainer to='admin/products'>
-                      <NavDropdown.Item>
+                      <Nav.Link>
                         <RiStore2Fill className='icon-sm me-2' />
                         Products
-                      </NavDropdown.Item>
+                      </Nav.Link>
                     </LinkContainer>
                     <LinkContainer to='admin/orders'>
-                      <NavDropdown.Item>
+                      <Nav.Link>
                         <RiBarChartFill className='icon-sm me-2' />
                         Orders
-                      </NavDropdown.Item>
+                      </Nav.Link>
                     </LinkContainer>
                     <LinkContainer to='admin/users'>
-                      <NavDropdown.Item>
+                      <Nav.Link>
                         <RiUserSettingsFill className='icon-sm me-2' />
                         Users
-                      </NavDropdown.Item>
+                      </Nav.Link>
                     </LinkContainer>
-                  </NavDropdown>
+                  </div>
                 )}
               </Nav>
 

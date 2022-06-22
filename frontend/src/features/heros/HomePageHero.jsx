@@ -23,8 +23,9 @@ const HomePageHero = () => {
 
   return (
     <Card
-      className='p-5 py-3 mb-5 bg-dark '
+      className='p-5 py-3 mb-5 '
       style={{
+        backgroundColor: '#A7A7A7',
         backgroundImage: 'url("/images/hero-background.jpg")',
         backgroundSize: 'cover',
         backgroundRepeat: 'no-repeat',

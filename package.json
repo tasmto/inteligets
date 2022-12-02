@@ -37,7 +37,7 @@
   },
   "devDependencies": {
     "concurrently": "^7.1.0",
-    "nodemon": "^2.0.15",
+    "nodemon": "^2.0.20",
     "sass": "^1.52.1"
   }
 }

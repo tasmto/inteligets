@@ -9,16 +9,16 @@ export default defineConfig({
   },
   server: {
     proxy: {
-      /* '/api': 'http://localhost:5000',*/
+      /* '/api': 'http://localhost:6000',*/
 
       '/api': {
-        target: 'http://localhost:5000',
+        target: 'http://localhost:6000',
         changeOrigin: true,
         secure: false,
         ws: true,
       },
       '/uploads': {
-        target: 'http://localhost:5000',
+        target: 'http://localhost:6000',
         changeOrigin: true,
         secure: false,
         ws: true,

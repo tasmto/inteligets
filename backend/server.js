@@ -33,7 +33,8 @@ app.get('/api/config/paypal', (req, res) =>
 ); // Config and send paypal ID
 
 app.get('/api/seed', async (req, res) => {
-  importData();
+  await importData();
+  res.status(200).send({});
 });
 
 // The uploads folder by default wont be accessible for node so we need to make it using express

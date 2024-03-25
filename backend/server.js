@@ -9,8 +9,6 @@ import userRoutes from './routes/userRoutes.js';
 import orderRoutes from './routes/orderRoutes.js';
 import uploadRoutes from './routes/uploadRoutes.js';
 import { errorHandler, notFound } from './middleware/errorMiddleware.js';
-import { importData } from './seeder.js';
-import asyncHandler from 'express-async-handler';
 
 dotenv.config();
 connectDB();
@@ -32,14 +30,6 @@ app.use('/api/orders', orderRoutes); // mount the order routes
 app.get('/api/config/paypal', (req, res) =>
   res.send(process.env.PAYPAL_CLIENT_ID)
 ); // Config and send paypal ID
-
-app.get(
-  '/api/seed',
-  asyncHandler(async (req, res) => {
-    await importData();
-    res.send({});
-  })
-);
 
 // The uploads folder by default wont be accessible for node so we need to make it using express
 const __dirname = path.resolve();

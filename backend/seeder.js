@@ -11,7 +11,7 @@ import connectDB from './config/db.js';
 dotenv.config();
 connectDB();
 
-export const importData = async () => {
+const importData = async () => {
   try {
     // Wipe everything before seeding
     await Order.deleteMany();

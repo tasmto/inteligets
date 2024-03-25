@@ -1,0 +1,19 @@
+name: Reseed the DB at 12:00 every month
+
+on:
+  schedule:
+    - cron: '0 12 * */1 *'
+
+jobs:
+  reseed_database:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Install Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '14'
+      - name: Install dependencies
+        run: npm install
+      - name: Run data import script
+        run: npm run data:import
